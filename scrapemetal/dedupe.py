@@ -25,6 +25,8 @@ CITY_ALIASES = {
     "cologne": "keulen",
     "koln": "keulen",
     "rottterdam": "rotterdam",
+    "sittard geleen": "sittard",  # the municipality; Volt is in Sittard
+    "de westereen": "zwaagwesteinde",  # Frisian name
 }
 
 DASHES = "-‐‑‒–—―−"  # hyphen-minus, hyphens, figure/en/em dashes, horizontal bar, minus

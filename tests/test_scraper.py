@@ -111,8 +111,10 @@ def test_dedupe_merges_across_sources():
         ev("podiuminfo", date(2026, 10, 10), "Up the Irons - Iron Maiden Tribute", "Capsloc", "Capelle aan den IJssel"),
         ev("metalagenda", date(2026, 10, 12), "Ritual — The Dutch Ghost Experience", "Boerderij", "Zoetermeer"),
         ev("metalfan", date(2026, 10, 12), "The Dutch Ghost Experience", "Boerderij", "Zoetermeer"),
+        ev("metalagenda", date(2026, 10, 31), "Swell", "Volt", "Sittard-Geleen"),
+        ev("podiuminfo", date(2026, 10, 31), "Swell", "Poppodium Volt", "Sittard"),
     ])
-    assert len(concerts) == 7
+    assert len(concerts) == 8
     irons = next(c for c in concerts if c.venue == "Capsloc")
     assert irons.city == "Capelle aan den IJssel" and len(irons.links) == 2
     assert len(next(c for c in concerts if "Ghost" in c.band).links) == 2
