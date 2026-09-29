@@ -18,6 +18,7 @@ class Event:
     time: str | None = None
     lineup: str | None = None
     ticket_url: str | None = None
+    event_url: str | None = None  # the event page on the venue's own website
 
     @property
     def last_date(self) -> date:
@@ -49,5 +50,6 @@ class Concert:
     time: str | None = None
     lineup: str | None = None
     ticket_url: str | None = None
+    event_url: str | None = None
     venue_url: str | None = None
     links: dict[str, str] = field(default_factory=dict)

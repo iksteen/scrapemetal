@@ -68,6 +68,7 @@ def write_output(concerts: list[Concert], status: dict[str, dict], out_dir: Path
             "city": c.city,
             "links": c.links,
             "tickets": c.ticket_url,
+            "event_page": c.event_url,
         } for c in concerts
     ], indent=1, ensure_ascii=False))
 

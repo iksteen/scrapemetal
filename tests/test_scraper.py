@@ -2,7 +2,12 @@ from datetime import date
 
 from scrapemetal.dedupe import deduplicate
 from scrapemetal.models import Event
-from scrapemetal.sources import parse_metalfan_dates, parse_metalfan_page, parse_podiuminfo_page
+from scrapemetal.sources import (
+    parse_metalagenda_page,
+    parse_metalfan_dates,
+    parse_metalfan_page,
+    parse_podiuminfo_page,
+)
 
 METALFAN_HTML = """
 <div class="pagetitle">Concertagenda 2026</div>
@@ -35,6 +40,18 @@ PODIUMINFO_HTML = """
   <div class="concert_rows_info"><div class="td_2 last"><a href="https://www.podiuminfo.nl/concert/1/Integrity/Baroeg/"
     aria-label="Concert Integrity + Ringworm, woensdag 30 september 2026 om 20:00, Baroeg, Rotterdam">x</a></div></div>
 </section>
+"""
+
+
+METALAGENDA_HTML = """
+<div id="cont_left"><div class="dateheader hanginthere" id="2026-09-30"><span class="bg">3</span> <sub>woensdag</sub></div>
+<div class="agendapunt"><div class="left"><a href="https://baroeg.nl/productie/integrity/" target="_blank"><h3> Live Hard Bookings presents: Integrity + Ringworm + World I Hate</h3></a><a href="/venues/baroeg" target="_blank">Baroeg</a> <a href="/p/rotterdam" target="_blank">Rotterdam</a><div style="font-size: 10px;"><span style="font-weight: bold">Bands: </span> integrity | <a href="https://www.metal-archives.com/bands/ringworm/81102">ringworm</a> | world i hate</div></div><div class="right blck"></div></div>
+<div class="dateheader hanginthere" id="2026-10-01"><span class="bg">0</span> <sub>donderdag</sub></div>
+<div class="agendapunt"><div class="left"><a href="https://nobel.nl/agenda/coroner" target="_blank"><h3> Coroner</h3></a><a href="/venues/nobel" target="_blank">Nobel</a> <a href="/p/leiden" target="_blank">Leiden</a><div style="font-size: 10px;"><span style="font-weight: bold">Bands: </span> coroner | tar pond | onbekend</div></div></div>
+<div class="agendapunt"><div class="left"><a href="https://hedon-zwolle.nl/x" target="_blank"><h3><div class="soldout">uitverkocht</div> A LIFE ALIGNED</h3></a><a href="/venues/hedon" target="_blank">Hedon</a> <a href="/p/zwolle" target="_blank">Zwolle</a></div></div>
+<div class="agendapunt"><div class="left"><a href="https://example.org/" target="_blank"><h3><div class="soldout">cancelled</div> Gone</h3></a><a href="/venues/x" target="_blank">X</a> <a href="/p/y" target="_blank">Y</a></div></div>
+<div class="agendapunt"><div class="left"><h3><div class="soldout">geen eventpagina</div>  Dogfest</h3><a href="/venues/paraplufabriek" target="_blank">Paraplufabriek</a> <a href="/p/nijmegen" target="_blank">Nijmegen</a><div><span>Bands: </span> rauss! | fulgurite</div></div></div>
+</div><div id="cont_right"></div>
 """
 
 
@@ -108,3 +125,28 @@ def test_dedupe_keeps_distinct_concerts():
         ev("podiuminfo", date(2026, 10, 3), "Ploegendienst", "Fluor", "Amersfoort"),  # exact duplicate
     ])
     assert len(concerts) == 5
+
+
+def test_parse_metalagenda_page():
+    events = parse_metalagenda_page(METALAGENDA_HTML)
+    assert [(e.date, e.band, e.venue, e.city, e.lineup) for e in events] == [
+        (date(2026, 9, 30), "Live Hard Bookings presents: Integrity + Ringworm + World I Hate", "Baroeg", "Rotterdam", None),
+        (date(2026, 10, 1), "Coroner", "Nobel", "Leiden", "Tar Pond"),
+        (date(2026, 10, 1), "A LIFE ALIGNED", "Hedon", "Zwolle", None),
+        (date(2026, 10, 1), "Dogfest", "Paraplufabriek", "Nijmegen", "Rauss!, Fulgurite"),
+    ]
+    assert events[0].url == "https://www.metalagenda.nl/?datum=2026-09-30"
+    assert events[0].event_url == "https://baroeg.nl/productie/integrity/"
+    assert events[3].event_url is None  # "geen eventpagina"
+
+
+def test_dedupe_merges_three_sources():
+    concerts = deduplicate([
+        ev("metalagenda", date(2026, 10, 1), "Coroner", "Nobel", "Leiden", lineup="Tar Pond", event_url="https://nobel.nl/x"),
+        ev("metalfan", date(2026, 10, 1), "Coroner", "Nobel", "Leiden", lineup="Tar Pond en Schizophrenia"),
+        ev("podiuminfo", date(2026, 10, 1), "Coroner", "Nobel", "Leiden", time="20:00"),
+    ])
+    assert len(concerts) == 1
+    assert set(concerts[0].links) == {"metalagenda", "metalfan", "podiuminfo"}
+    assert concerts[0].lineup == "Tar Pond en Schizophrenia" and concerts[0].time == "20:00"
+    assert concerts[0].event_url == "https://nobel.nl/x"

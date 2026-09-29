@@ -13,7 +13,7 @@ WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 MONTHS = ["January", "February", "March", "April", "May", "June", "July",
           "August", "September", "October", "November", "December"]
 
-SOURCE_LABELS = {"metalfan": "Metalfan", "podiuminfo": "Podiuminfo"}
+SOURCE_LABELS = {"metalfan": "Metalfan", "podiuminfo": "Podiuminfo", "metalagenda": "MetalAgenda"}
 
 
 def _date_label(c: Concert) -> str:
@@ -30,9 +30,14 @@ def _row(c: Concert) -> str:
         f"{escape(SOURCE_LABELS.get(src, src))}</a>"
         for src, url in c.links.items()
     )
+    if c.event_url:
+        links += (
+            f'<a class="src src-icon" href="{escape(c.event_url)}" target="_blank" rel="noopener" '
+            'title="Event page at the venue" aria-label="Event page at the venue">🏛️</a>'
+        )
     if c.ticket_url:
         links += (
-            f'<a class="src src-tickets" href="{escape(c.ticket_url)}" target="_blank" rel="noopener" '
+            f'<a class="src src-icon" href="{escape(c.ticket_url)}" target="_blank" rel="noopener" '
             'title="Tickets" aria-label="Tickets">🎫</a>'
         )
 
@@ -105,11 +110,11 @@ TEMPLATE = """<!doctype html>
 <title>Metal Agenda</title>
 <!-- Only the 🎫 glyph (text=), so ticket links render even without a system emoji font. -->
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&text=%F0%9F%8E%AB&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&text=%F0%9F%8E%AB%F0%9F%8F%9B%EF%B8%8F&display=swap">
 <style>
 :root {
   --bg: #0f0f10; --panel: #18181b; --panel-2: #202024; --line: #2c2c31;
-  --text: #e7e7ea; --muted: #9a9aa3; --accent: #d7263d; --accent-2: #3a86ff;
+  --text: #e7e7ea; --muted: #9a9aa3; --accent: #d7263d; --accent-2: #3a86ff; --accent-3: #7a4fd6;
 }
 @media (prefers-color-scheme: light) {
   :root { --bg: #f6f6f7; --panel: #ffffff; --panel-2: #f0f0f2; --line: #dedee3; --text: #18181b; --muted: #62626b; }
@@ -153,7 +158,8 @@ td.links { white-space: nowrap; }
 a.src { display: inline-block; font-size: .75rem; text-decoration: none; padding: .1rem .45rem; border-radius: 4px; margin: 0 .2rem .2rem 0; color: #fff; }
 a.src-metalfan { background: var(--accent); }
 a.src-podiuminfo { background: var(--accent-2); }
-a.src-tickets { font-family: "Noto Color Emoji", sans-serif; background: none; padding: 0 .2rem; font-size: 1.1rem; line-height: 1; vertical-align: middle; }
+a.src-metalagenda { background: var(--accent-3); }
+a.src-icon { font-family: "Noto Color Emoji", sans-serif; background: none; padding: 0 .2rem; font-size: 1.1rem; line-height: 1; vertical-align: middle; }
 .hidden { display: none !important; }
 .nothing { color: var(--muted); text-align: center; padding: 3rem 0; }
 @media (max-width: 760px) {
@@ -183,7 +189,7 @@ a.src-tickets { font-family: "Noto Color Emoji", sans-serif; background: none; p
   <div class="toolbar-inner">
     <input id="q" type="search" placeholder="Search band, venue or city… (press /)" autocomplete="off">
     <select id="city"><option value="">All cities</option>{{city_options}}</select>
-    <select id="source"><option value="">All sources</option><option value="both">On both sites</option>{{source_options}}</select>
+    <select id="source"><option value="">All sources</option><option value="both">On multiple sites</option>{{source_options}}</select>
     <span class="count" id="count"></span>
   </div>
   <nav class="months">{{month_nav}}</nav>

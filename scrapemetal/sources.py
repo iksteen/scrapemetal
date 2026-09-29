@@ -20,6 +20,8 @@ TIMEOUT = 30
 
 METALFAN_URL = "https://www.metalfan.nl/agenda.php"
 PODIUMINFO_URL = "https://www.podiuminfo.nl/concertagenda/genre/metal/?input_event_type=1&input_country=58"
+METALAGENDA_URL = "https://www.metalagenda.nl/"
+METALAGENDA_AJAX_URL = "https://www.metalagenda.nl/ajax.php"
 
 MONTHS = {
     "jan": 1, "feb": 2, "mrt": 3, "maa": 3, "apr": 4, "mei": 5, "jun": 6,
@@ -189,7 +191,84 @@ def scrape_podiuminfo(session: requests.Session, max_pages: int = 30, delay: flo
     return events
 
 
+# --- metalagenda.nl --------------------------------------------------------
+
+# Badges in the event title; cancelled events are skipped, the others are dropped from the title.
+METALAGENDA_CANCELLED = {"cancelled", "geannuleerd", "afgelast"}
+METALAGENDA_NO_BANDS = {"", "onbekend"}
+
+
+def _band_case(name: str) -> str:
+    """metalagenda lists bands in lowercase; capitalize words that have no capitals of their own."""
+    return " ".join(w if w != w.lower() else w[:1].upper() + w[1:] for w in name.split())
+
+
+def parse_metalagenda_page(html: str) -> list[Event]:
+    soup = BeautifulSoup(html, "html.parser")
+    events = []
+    day: date | None = None
+    for el in soup.select(".dateheader, .agendapunt"):
+        if "dateheader" in el["class"]:
+            try:
+                day = date.fromisoformat(el.get("id", ""))
+            except ValueError:
+                log.warning("metalagenda: bad date header %r", el.get("id"))
+                day = None
+            continue
+        title = el.select_one(".left h3")
+        place = el.select(".left > a[href]")
+        venue = next((a for a in place if a["href"].startswith("/venues/")), None)
+        city = next((a for a in place if a["href"].startswith("/p/")), None)
+        if not (day and title and venue and city):
+            continue
+        badges = {b.get_text(" ", strip=True).lower() for b in title.find_all(["div", "span"])}
+        if badges & METALAGENDA_CANCELLED:
+            continue
+        for b in title.find_all(["div", "span"]):
+            b.decompose()
+        band = title.get_text(" ", strip=True)
+        event_link = title.find_parent("a", href=True)
+        event_url = event_link["href"] if event_link and event_link["href"].startswith(("http://", "https://")) else None
+
+        # "Bands: a | b | c" often names support acts that are missing from the title.
+        lineup = None
+        if (bands := el.select_one(".left > div")) and ":" in bands.get_text():
+            names = [n.strip() for n in bands.get_text().split(":", 1)[1].split("|")]
+            extra = [n for n in names if n not in METALAGENDA_NO_BANDS and n not in band.lower()]
+            lineup = ", ".join(_band_case(n) for n in extra) or None
+
+        events.append(Event(
+            source="metalagenda",
+            date=day,
+            band=band,
+            venue=venue.get_text(" ", strip=True),
+            city=city.get_text(" ", strip=True),
+            lineup=lineup,
+            url=f"{METALAGENDA_URL}?datum={day.isoformat()}",
+            event_url=event_url,
+        ))
+    return events
+
+
+def scrape_metalagenda(session: requests.Session) -> list[Event]:
+    # The agenda is loaded by the page's JavaScript; the endpoint rejects requests without a Referer.
+    log.info("metalagenda: fetching %s", METALAGENDA_AJAX_URL)
+    resp = session.post(
+        METALAGENDA_AJAX_URL,
+        data={"action": "load_agenda", "postcode": "", "kmrange": "0", "q": "", "zoekdatum": "",
+              "favos": "false", "newadd": "false", "belgie": "false"},
+        headers={"Referer": METALAGENDA_URL},
+        timeout=TIMEOUT,
+    )
+    resp.raise_for_status()
+    resp.encoding = "utf-8"
+    if "agendapunt" not in resp.text:
+        raise RuntimeError(f"unexpected response: {resp.text[:100]!r}")
+    return parse_metalagenda_page(resp.text)
+
+
 SOURCES = {
     "metalfan": scrape_metalfan,
     "podiuminfo": scrape_podiuminfo,
+    "metalagenda": scrape_metalagenda,
 }

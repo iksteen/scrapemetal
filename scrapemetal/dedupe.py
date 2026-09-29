@@ -14,8 +14,8 @@ from difflib import SequenceMatcher
 from .models import Concert, Event
 
 # Preferred source per field when merging; the first source that has a value wins.
-BAND_PREFERENCE = ["metalfan", "podiuminfo"]  # metalfan lists full line-ups
-PLACE_PREFERENCE = ["podiuminfo", "metalfan"]  # podiuminfo has separate venue/city fields
+BAND_PREFERENCE = ["metalfan", "podiuminfo", "metalagenda"]  # metalfan lists full line-ups
+PLACE_PREFERENCE = ["podiuminfo", "metalagenda", "metalfan"]  # metalfan often lacks a separate city
 
 CITY_ALIASES = {
     "s hertogenbosch": "den bosch",
@@ -99,14 +99,14 @@ def _pick(events: list[Event], attr: str, preference: list[str]):
 
 
 def merge(group: list[Event]) -> Concert:
-    lineups = [e.lineup for e in group if e.lineup]
     return Concert(
         date=min(e.date for e in group),
         end_date=max((e.end_date for e in group if e.end_date), default=None),
         time=_pick(group, "time", PLACE_PREFERENCE),
         band=_pick(group, "band", BAND_PREFERENCE),
-        lineup=lineups[0] if lineups else None,
+        lineup=_pick(group, "lineup", BAND_PREFERENCE),
         ticket_url=_pick(group, "ticket_url", PLACE_PREFERENCE),
+        event_url=_pick(group, "event_url", PLACE_PREFERENCE),
         venue=_pick(group, "venue", PLACE_PREFERENCE) or "",
         city=_pick(group, "city", PLACE_PREFERENCE) or "",
         links={e.source: e.url for e in sorted(group, key=lambda e: e.source)},
