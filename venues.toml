@@ -1,0 +1,1004 @@
+# Venue websites, used to link venue names on the agenda page.
+#
+# Matching is done on the venue name (case, accents and punctuation are ignored, as are a
+# leading "de"/"het"/"the" and the word "poppodium") plus the city. Add `aliases` for other
+# spellings the agenda sites use. Run `uv run scrapemetal venues` to list the venues that
+# don't have a link yet, most frequent first.
+
+[[venue]]
+name = "TivoliVredenburg"
+city = "Utrecht"
+url = "https://www.tivolivredenburg.nl/"
+
+[[venue]]
+name = "013"
+city = "Tilburg"
+url = "https://www.013.nl/"
+
+[[venue]]
+name = "Patronaat"
+city = "Haarlem"
+url = "https://patronaat.nl/"
+
+[[venue]]
+name = "Baroeg"
+city = "Rotterdam"
+url = "https://baroeg.nl/"
+
+[[venue]]
+name = "Doornroosje"
+city = "Nijmegen"
+url = "https://www.doornroosje.nl/"
+
+[[venue]]
+name = "Merleyn"
+city = "Nijmegen"
+url = "https://www.doornroosje.nl/special/merleyn/"
+
+[[venue]]
+name = "Effenaar"
+city = "Eindhoven"
+url = "https://www.effenaar.nl/"
+
+[[venue]]
+name = "Musicon"
+city = "Den Haag"
+url = "https://musicon.nl/"
+
+[[venue]]
+name = "Bibelot"
+city = "Dordrecht"
+url = "https://bibelot.net/"
+
+[[venue]]
+name = "Iduna"
+city = "Drachten"
+url = "https://iduna.nl/"
+
+[[venue]]
+name = "Neushoorn"
+city = "Leeuwarden"
+url = "https://www.neushoorn.nl/"
+
+[[venue]]
+name = "Little Devil"
+city = "Tilburg"
+url = "https://www.littledevil.nl/"
+
+[[venue]]
+name = "Muziekgieterij"
+city = "Maastricht"
+url = "https://muziekgieterij.nl/"
+
+[[venue]]
+name = "Boerderij"
+city = "Zoetermeer"
+url = "https://poppodiumboerderij.nl/"
+
+[[venue]]
+name = "Nobel"
+city = "Leiden"
+url = "https://nobel.nl/"
+
+[[venue]]
+name = "Het Podium"
+city = "Hoogeveen"
+url = "https://hetpodium.nl/"
+
+[[venue]]
+name = "Melkweg"
+city = "Amsterdam"
+url = "https://www.melkweg.nl/"
+
+[[venue]]
+name = "Hall of Fame"
+city = "Tilburg"
+url = "https://www.hall-of-fame.nl/"
+
+[[venue]]
+name = "Vera"
+city = "Groningen"
+url = "https://www.vera-groningen.nl/"
+
+[[venue]]
+name = "De Pul"
+city = "Uden"
+url = "https://www.livepul.com/"
+
+[[venue]]
+name = "Willemeen"
+city = "Arnhem"
+url = "https://www.willemeen.nl/"
+
+[[venue]]
+name = "AFAS Live"
+city = "Amsterdam"
+url = "https://www.afaslive.nl/"
+
+[[venue]]
+name = "Cacaofabriek"
+city = "Helmond"
+url = "https://cacaofabriek.nl/"
+
+[[venue]]
+name = "De Helling"
+city = "Utrecht"
+url = "https://dehelling.nl/"
+
+[[venue]]
+name = "De Bosuil"
+city = "Weert"
+url = "https://www.debosuil.nl/"
+
+[[venue]]
+name = "dB's"
+city = "Utrecht"
+url = "https://dbstudio.nl/"
+aliases = ["dB's Studio"]
+
+[[venue]]
+name = "Metropool"
+city = "Hengelo"
+url = "https://metropool.nl/"
+
+[[venue]]
+name = "Metropool"
+city = "Enschede"
+url = "https://metropool.nl/"
+aliases = ["Metropool Enschede"]
+
+[[venue]]
+name = "Nieuwe Nor"
+city = "Heerlen"
+url = "https://nieuwenor.nl/"
+
+[[venue]]
+name = "Dynamo"
+city = "Eindhoven"
+url = "https://www.dynamo-eindhoven.nl/"
+
+[[venue]]
+name = "Hedon"
+city = "Zwolle"
+url = "https://www.hedon-zwolle.nl/"
+
+[[venue]]
+name = "Luxor Live"
+city = "Arnhem"
+url = "https://www.luxorlive.nl/"
+
+[[venue]]
+name = "Willem Twee"
+city = "Den Bosch"
+url = "https://www.willem-twee.nl/"
+
+[[venue]]
+name = "Volt"
+city = "Sittard"
+url = "https://www.poppodium-volt.nl/"
+
+[[venue]]
+name = "Spot"
+city = "Groningen"
+url = "https://www.spotgroningen.nl/"
+aliases = ["SPOT / De Oosterpoort", "Oosterpoort"]
+
+[[venue]]
+name = "Podium Victorie"
+city = "Alkmaar"
+url = "https://www.podiumvictorie.nl/"
+aliases = ["Victorie"]
+
+[[venue]]
+name = "Cafe Calluna"
+city = "Ommen"
+url = "https://www.cafecalluna.nl/"
+aliases = ["Calluna"]
+
+[[venue]]
+name = "P3"
+city = "Purmerend"
+url = "https://www.p3purmerend.nl/"
+
+[[venue]]
+name = "Paradiso"
+city = "Amsterdam"
+url = "https://www.paradiso.nl/"
+
+[[venue]]
+name = "StudioGonz"
+city = "Gouda"
+url = "https://www.studiogonz.nl/"
+
+[[venue]]
+name = "Corneel"
+city = "Lelystad"
+url = "https://www.corneel.nl/"
+
+[[venue]]
+name = "Ancienne Belgique"
+city = "Brussel"
+url = "https://www.abconcerts.be/"
+aliases = ["AB"]
+
+[[venue]]
+name = "P60"
+city = "Amstelveen"
+url = "https://p60.nl/"
+
+[[venue]]
+name = "Bolwerk"
+city = "Sneek"
+url = "https://www.bolwerk.nl/"
+
+[[venue]]
+name = "Grenswerk"
+city = "Venlo"
+url = "https://www.grenswerk.nl/"
+
+[[venue]]
+name = "Estrado"
+city = "Harderwijk"
+url = "https://estrado.nl/"
+
+[[venue]]
+name = "Capsloc"
+city = "Capelle aan den IJssel"
+url = "https://www.capsloc.nl/"
+
+[[venue]]
+name = "EKKO"
+city = "Utrecht"
+url = "https://ekko.nl/"
+
+[[venue]]
+name = "Phoenix"
+city = "Breda"
+url = "https://poppodiumphoenix.nl/"
+
+[[venue]]
+name = "Groene Engel"
+city = "Oss"
+url = "https://www.groene-engel.nl/"
+
+[[venue]]
+name = "Cpunt"
+city = "Hoofddorp"
+url = "https://www.cpunt.nl/"
+aliases = ["Cpunt Theater"]
+
+[[venue]]
+name = "Turbinenhalle"
+city = "Oberhausen"
+url = "https://turbinenhalle.de/"
+
+[[venue]]
+name = "Kroepoekfabriek"
+city = "Vlaardingen"
+url = "https://kroepoekfabriek.nl/"
+
+[[venue]]
+name = "'t Beest"
+city = "Goes"
+url = "https://tbeest.nl/"
+aliases = ["Podium 't Beest"]
+
+[[venue]]
+name = "Koninklijk Theater Carré"
+city = "Amsterdam"
+url = "https://carre.nl/"
+aliases = ["Carré"]
+
+[[venue]]
+name = "Paard"
+city = "Den Haag"
+url = "https://www.paard.nl/"
+
+[[venue]]
+name = "Mainstage"
+city = "Den Bosch"
+url = "https://www.mainstage.nl/"
+
+[[venue]]
+name = "Fluor"
+city = "Amersfoort"
+url = "https://fluor033.nl/"
+
+[[venue]]
+name = "Gebouw-T"
+city = "Bergen op Zoom"
+url = "https://gebouw-t.nl/"
+
+[[venue]]
+name = "Ziggo Dome"
+city = "Amsterdam"
+url = "https://www.ziggodome.nl/"
+
+[[venue]]
+name = "Ahoy"
+city = "Rotterdam"
+url = "https://www.ahoy.nl/"
+aliases = ["Rotterdam Ahoy"]
+
+[[venue]]
+name = "Rotown"
+city = "Rotterdam"
+url = "https://www.rotown.nl/"
+
+[[venue]]
+name = "Burgerweeshuis"
+city = "Deventer"
+url = "https://www.burgerweeshuis.nl/"
+
+[[venue]]
+name = "Martiniplaza"
+city = "Groningen"
+url = "https://www.martiniplaza.nl/"
+
+[[venue]]
+name = "Mezz"
+city = "Breda"
+url = "https://www.mezz.nl/"
+
+[[venue]]
+name = "Gigant"
+city = "Apeldoorn"
+url = "https://www.gigant.nl/"
+
+[[venue]]
+name = "Vorstin"
+city = "Hilversum"
+url = "https://vorstin.nl/"
+
+[[venue]]
+name = "Trix"
+city = "Antwerpen"
+url = "https://www.trixonline.be/"
+
+[[venue]]
+name = "Azijnfabriek"
+city = "Roermond"
+url = "https://azijnfabriek.nl/"
+
+[[venue]]
+name = "ECI Cultuurfabriek"
+city = "Roermond"
+url = "https://ecicultuurfabriek.nl/"
+
+[[venue]]
+name = "Orpheus"
+city = "Apeldoorn"
+url = "https://www.orpheus.nl/"
+
+[[venue]]
+name = "Live Music Hall"
+city = "Keulen"
+url = "https://www.livemusichall.de/"
+
+[[venue]]
+name = "De Spot"
+city = "Middelburg"
+url = "https://despotmiddelburg.nl/"
+
+[[venue]]
+name = "De Lawei"
+city = "Drachten"
+url = "https://www.lawei.nl/"
+aliases = ["Schouwburg de Lawei"]
+
+[[venue]]
+name = "Musis"
+city = "Arnhem"
+url = "https://www.musisenstadstheater.nl/"
+aliases = ["Musis Sacrum"]
+
+[[venue]]
+name = "Gashouder"
+city = "Amsterdam"
+url = "https://westergas.nl/"
+
+[[venue]]
+name = "Buze"
+city = "Steenwijk"
+url = "https://buze.nl/"
+
+[[venue]]
+name = "Carambole"
+city = "Winschoten"
+url = "https://www.carambole-winschoten.nl/"
+
+# --- Smaller venues, theaters and venues abroad ---
+
+[[venue]]
+name = "The Jack"
+city = "Eindhoven"
+url = "https://www.cafethejack.nl/"
+
+[[venue]]
+name = "Sound Dog"
+city = "Breda"
+url = "https://sounddogbreda.nl/"
+
+[[venue]]
+name = "DVG Club"
+city = "Kortrijk"
+url = "https://dvgclub.com/"
+
+[[venue]]
+name = "So What!"
+city = "Gouda"
+url = "https://www.so-what.nl/"
+
+[[venue]]
+name = "Astrant"
+city = "Ede"
+url = "https://astrant-ede.nl/"
+
+[[venue]]
+name = "Lotto Arena"
+city = "Antwerpen"
+url = "https://www.lotto-arena.be/"
+
+[[venue]]
+name = "Flexiforum"
+city = "Kerkrade"
+url = "https://flexiforum.nl/"
+
+# https is broken on this site
+[[venue]]
+name = "Innocent"
+city = "Hengelo"
+url = "http://www.innocent.nl/"
+
+[[venue]]
+name = "Rabo Theater De Meenthe"
+city = "Steenwijk"
+url = "https://www.demeenthe.nl/"
+aliases = ["De Meenthe"]
+
+[[venue]]
+name = "Theater de Kom"
+city = "Nieuwegein"
+url = "https://www.dekom.nl/"
+aliases = ["De Kom"]
+
+[[venue]]
+name = "JC the Cube"
+city = "Boskoop"
+url = "https://www.poppodiumthecube.nl/"
+aliases = ["The Cube"]
+
+[[venue]]
+name = "Goudse Schouwburg"
+city = "Gouda"
+url = "https://goudseschouwburg.nl/"
+
+[[venue]]
+name = "Schouwburg Cuijk"
+city = "Cuijk"
+url = "https://www.schouwburgcuijk.nl/"
+
+[[venue]]
+name = "Gebäude 9"
+city = "Keulen"
+url = "https://gebaeude9.de/"
+
+[[venue]]
+name = "Helvete"
+city = "Oberhausen"
+url = "https://helvete.de/"
+
+[[venue]]
+name = "Mitsubishi Electric Halle"
+city = "Düsseldorf"
+url = "https://www.mitsubishi-electric-halle.de/"
+aliases = ["Mitsubishi Electric"]
+
+[[venue]]
+name = "De Tanker in Noord"
+city = "Amsterdam"
+url = "https://detanker.nl/"
+aliases = ["De Tanker"]
+
+[[venue]]
+name = "OJV De Koornbeurs"
+city = "Delft"
+url = "https://koornbeurs.nl/"
+aliases = ["De Koornbeurs", "Koornbeurs"]
+
+[[venue]]
+name = "Essigfabrik"
+city = "Keulen"
+url = "https://essig-fabrik.de/"
+aliases = ["Essigfabrikk"]
+
+[[venue]]
+name = "OCCII"
+city = "Amsterdam"
+url = "https://occii.org/"
+
+[[venue]]
+name = "Scum"
+city = "Katwijk"
+url = "https://scumkatwijk.nl/"
+
+[[venue]]
+name = "Nederland Drie"
+city = "Wateringen"
+url = "https://nederlanddrie.nl/"
+
+[[venue]]
+name = "Metal Front Coevorden"
+city = "Coevorden"
+url = "https://www2.mfcweb.nl/"
+aliases = ["MFC"]
+
+[[venue]]
+name = "Lido"
+city = "Berlin"
+url = "https://www.lido-berlin.de/"
+
+[[venue]]
+name = "Walhalla"
+city = "Deventer"
+url = "https://www.walhalla-deventer.nl/"
+
+[[venue]]
+name = "Simplon"
+city = "Groningen"
+url = "https://simplon.nl/"
+
+# café of Bibelot
+[[venue]]
+name = "Brandstof"
+city = "Dordrecht"
+url = "https://brandstofdordrecht.nl/"
+
+[[venue]]
+name = "SugarFactory"
+city = "Halfweg"
+url = "https://sugarfactory.nl/"
+
+[[venue]]
+name = "De Engelstede"
+city = "Engelbert"
+url = "https://engelstede.nl/"
+
+[[venue]]
+name = "Kantine"
+city = "Keulen"
+url = "https://kantine.com/"
+
+[[venue]]
+name = "Casino"
+city = "St. Niklaas"
+url = "https://decasino.be/"
+aliases = ["De Casino"]
+
+[[venue]]
+name = "ACU"
+city = "Utrecht"
+url = "https://acu.nl/"
+
+[[venue]]
+name = "Weststadthalle"
+city = "Essen"
+url = "https://www.weststadthalle.de/"
+
+[[venue]]
+name = "Metal Church"
+city = "Maurik"
+url = "https://metalchurch.nl/"
+
+[[venue]]
+name = "Muziekcafé Helmond"
+city = "Helmond"
+url = "https://muziekcafehelmond.nl/"
+
+[[venue]]
+name = "De Piek"
+city = "Vlissingen"
+url = "https://depiek.nl/"
+
+[[venue]]
+name = "Kavka Zappa"
+city = "Antwerpen"
+url = "https://kavka.be/"
+aliases = ["Kavka Oudaan", "Kavka"]
+
+[[venue]]
+name = "Paradox"
+city = "Tilburg"
+url = "https://www.paradoxtilburg.nl/"
+
+[[venue]]
+name = "Badhûs"
+city = "Zwaagwesteinde"
+url = "https://badhus.nl/"
+
+[[venue]]
+name = "Zaantheater"
+city = "Zaandam"
+url = "https://zaantheater.nl/"
+
+[[venue]]
+name = "MTC"
+city = "Keulen"
+url = "https://www.mtc-cologne.de/"
+
+[[venue]]
+name = "Altstadt"
+city = "Eindhoven"
+url = "https://www.altstadt.nl/"
+
+[[venue]]
+name = "Klokgebouw"
+city = "Eindhoven"
+url = "https://www.klokgebouw.nl/"
+
+[[venue]]
+name = "J.C. De Bunker"
+city = "Gemert"
+url = "https://www.bunkergemert.nl/"
+aliases = ["De Bunker"]
+
+[[venue]]
+name = "Muziekgebouw Eindhoven"
+city = "Eindhoven"
+url = "https://mge.nl/"
+
+[[venue]]
+name = "Zeche"
+city = "Bochum"
+url = "https://zeche.net/"
+
+[[venue]]
+name = "Zentrum Altenberg"
+city = "Oberhausen"
+url = "https://www.zentrumaltenberg.de/"
+
+[[venue]]
+name = "Emsland Arena"
+city = "Lingen"
+url = "https://www.emslandarena.com/"
+
+[[venue]]
+name = "Club Hell"
+city = "Diest"
+url = "https://www.helldiest.com/"
+aliases = ["Hell"]
+
+[[venue]]
+name = "Schouwburg Concertzaal Tilburg"
+city = "Tilburg"
+url = "https://www.schouwburgconcertzaaltilburg.nl/"
+
+# no website of its own
+[[venue]]
+name = "Cafe Mukkes"
+city = "Leeuwarden"
+url = "https://www.facebook.com/Alternative.Rockcafe.Mukkes/"
+aliases = ["Mukkes"]
+
+[[venue]]
+name = "De Theaterbakkerij"
+city = "Gouda"
+url = "https://www.theaterbakkerij.nl/"
+
+[[venue]]
+name = "Cinetol"
+city = "Amsterdam"
+url = "https://www.cinetol.nl/"
+
+[[venue]]
+name = "Wilhelminakerk"
+city = "Dordrecht"
+url = "https://www.dewilhelminakerk.nl/"
+
+[[venue]]
+name = "Popcentrale"
+city = "Dordrecht"
+url = "https://www.popcentrale.nl/"
+
+[[venue]]
+name = "De Doelen"
+city = "Rotterdam"
+url = "https://www.dedoelen.nl/"
+
+[[venue]]
+name = "Botanique"
+city = "Brussel"
+url = "https://botanique.be/"
+aliases = ["La Botanique"]
+
+[[venue]]
+name = "Ruhrcongress"
+city = "Bochum"
+url = "https://www.ruhrcongress-bochum.de/"
+
+# no website of its own
+[[venue]]
+name = "Merlijn 2.0"
+city = "Winterswijk"
+url = "https://www.facebook.com/p/Merlijn-20-Winterswijk-100083297184850/"
+
+[[venue]]
+name = "Tolhuistuin"
+city = "Amsterdam"
+url = "https://tolhuistuin.nl/"
+
+[[venue]]
+name = "Het Veur Theater"
+city = "Leidschendam"
+url = "https://www.hetveurtheater.nl/"
+
+[[venue]]
+name = "Podium Bredius"
+city = "Woerden"
+url = "https://www.podiumbredius.nl/"
+
+[[venue]]
+name = "Het Klooster"
+city = "Woerden"
+url = "https://www.kloosterwoerden.nl/"
+
+[[venue]]
+name = "Posthuis Theater"
+city = "Heerenveen"
+url = "https://www.posthuistheater.nl/"
+
+[[venue]]
+name = "Theater Hof 88"
+city = "Almelo"
+url = "https://www.hof88.nl/"
+
+[[venue]]
+name = "Cultura"
+city = "Ede"
+url = "https://cultura-ede.nl/"
+
+[[venue]]
+name = "Theater 't Speelhuis"
+city = "Helmond"
+url = "https://theaterspeelhuis.nl/"
+
+[[venue]]
+name = "De Maaspoort"
+city = "Venlo"
+url = "https://www.maaspoort.nl/"
+
+[[venue]]
+name = "Parkgebouw"
+city = "Rijssen"
+url = "https://www.parkgebouw.nl/"
+
+[[venue]]
+name = "Vorst Nationaal"
+city = "Brussel"
+url = "https://www.vorst-nationaal.be/"
+
+# Deurne in Noord-Brabant (NL)
+[[venue]]
+name = "Cultuurcentrum Deurne"
+city = "Deurne"
+url = "https://www.ccdeurne.nl/"
+
+[[venue]]
+name = "Club Volta"
+city = "Keulen"
+url = "https://club-volta.de/"
+
+[[venue]]
+name = "Schouwburg Het Park"
+city = "Hoorn"
+url = "https://hetpark.nl/"
+
+[[venue]]
+name = "Theater De Veste"
+city = "Delft"
+url = "https://www.theaterdeveste.nl/"
+
+# the source spells the city "Ossnabrück"
+[[venue]]
+name = "Hyde Park"
+city = "Ossnabrück"
+url = "https://www.hyde-park.de/"
+
+[[venue]]
+name = "Blauwe Kei, Theater aan de Noordkade"
+city = "Veghel"
+url = "https://www.blauwekei.nl/"
+aliases = ["Blauwe Kei", "Theater aan de Noordkade"]
+
+[[venue]]
+name = "Gleis 9"
+city = "Bochum"
+url = "https://gleis-neun.de/"
+
+[[venue]]
+name = "van Beresteyn"
+city = "Veendam"
+url = "https://www.vanberesteyn.nl/"
+aliases = ["Theater vanBeresteyn"]
+
+[[venue]]
+name = "De Oostkerk"
+city = "Middelburg"
+url = "https://deoostkerk.nl/"
+
+[[venue]]
+name = "Het Wennekerpand"
+city = "Schiedam"
+url = "https://wennekerpand.nl/"
+
+[[venue]]
+name = "Theater de Hofnar"
+city = "Valkenswaard"
+url = "https://www.hofnar.nl/"
+
+[[venue]]
+name = "De Muze"
+city = "Noordwijk"
+url = "https://demuze.nl/"
+
+[[venue]]
+name = "De Peppel"
+city = "Zeist"
+url = "https://peppel-zeist.nl/"
+
+# shared site with Club Volta
+[[venue]]
+name = "Carlswerk Victoria"
+city = "Keulen"
+url = "https://carlswerk-victoria.de/"
+
+[[venue]]
+name = "PHIL"
+city = "Haarlem"
+url = "https://philhaarlem.nl/"
+
+[[venue]]
+name = "Theater aan de Parade"
+city = "Den Bosch"
+url = "https://www.theateraandeparade.nl/"
+
+[[venue]]
+name = "Stadstheater Zoetermeer"
+city = "Zoetermeer"
+url = "https://stadstheater.nl/"
+
+[[venue]]
+name = "Stadsgehoorzaal Vlaardingen"
+city = "Vlaardingen"
+url = "https://stadsgehoorzaal.nl/"
+aliases = ["Stadsgehoorzaal"]
+
+[[venue]]
+name = "PopEI"
+city = "Eindhoven"
+url = "https://www.popei.nl/"
+
+[[venue]]
+name = "Junushoff Theater"
+city = "Wageningen"
+url = "https://www.junushoff.nl/"
+aliases = ["Junushoff"]
+
+# shared site of Schouwburg Odeon & Theater de Spiegel
+[[venue]]
+name = "Schouwburg Odeon"
+city = "Zwolle"
+url = "https://www.zwolsetheaters.nl/"
+aliases = ["Odeon"]
+
+[[venue]]
+name = "Theater de Beun"
+city = "Heiloo"
+url = "https://debeunheiloo.nl/"
+
+[[venue]]
+name = "VU Griffioen theater"
+city = "Amsterdam"
+url = "https://griffioen.vu.nl/"
+aliases = ["Griffioen"]
+
+[[venue]]
+name = "Theater de Voorveghter"
+city = "Hardenberg"
+url = "https://www.voorveghter.nl/"
+
+[[venue]]
+name = "Q-Factory"
+city = "Amsterdam"
+url = "https://q-factory.com/nl"
+
+[[venue]]
+name = "Theater Zinin"
+city = "Nijverdal"
+url = "https://www.zinin.com/"
+
+[[venue]]
+name = "S.C.C. De Ruchte"
+city = "Someren"
+url = "https://www.deruchte.nl/"
+aliases = ["De Ruchte"]
+
+[[venue]]
+name = "DeLaMar"
+city = "Amsterdam"
+url = "https://delamar.nl/"
+
+# shared site of Zeeland Theaters
+[[venue]]
+name = "Scheldetheater"
+city = "Terneuzen"
+url = "https://www.zeelandtheaters.nl/informatie/theaters/scheldetheater/"
+
+[[venue]]
+name = "Theater de Purmaryn"
+city = "Purmerend"
+url = "https://depurmaryn.nl/"
+
+[[venue]]
+name = "Isala Theater"
+city = "Capelle aan den IJssel"
+url = "https://www.isalatheater.nl/"
+
+[[venue]]
+name = "Amare"
+city = "Den Haag"
+url = "https://www.amare.nl/"
+
+[[venue]]
+name = "ATLAS Theater"
+city = "Emmen"
+url = "https://www.atlastheater.nl/"
+
+[[venue]]
+name = "De Maagd"
+city = "Bergen op Zoom"
+url = "https://www.demaagd.nl/"
+
+[[venue]]
+name = "Flint"
+city = "Amersfoort"
+url = "https://flint.nl/"
+
+[[venue]]
+name = "Theater de Schalm"
+city = "Veldhoven"
+url = "https://www.deschalm.com/"
+
+[[venue]]
+name = "De Nieuwe Kolk (DNK)"
+city = "Assen"
+url = "https://denieuwekolk.nl/"
+aliases = ["De Nieuwe Kolk", "DNK"]
+
+[[venue]]
+name = "Stadstheater de Bond"
+city = "Oldenzaal"
+url = "https://www.stadstheaterdebond.nl/"
+
+[[venue]]
+name = "Kunstmin Schouwburg"
+city = "Dordrecht"
+url = "https://www.kunstmin.nl/"
+aliases = ["Kunstmin"]
+
+[[venue]]
+name = "Kennemer Theater"
+city = "Beverwijk"
+url = "https://www.kennemertheater.nl/"
+
+[[venue]]
+name = "Ijssportcentrum"
+city = "Eindhoven"
+url = "https://ijssportcentrumeindhoven.sportfondsen.nl/"
+
+# no website of its own
+[[venue]]
+name = "Rockcafé Spider"
+city = "Balk"
+url = "https://www.facebook.com/p/Rockcaf%C3%A9-Spider-61578835755313/"
+aliases = ["Rockcafé", "Cafe Spider", "Spider"]

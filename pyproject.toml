@@ -1,0 +1,19 @@
+[project]
+name = "scrapemetal"
+version = "0.1.0"
+description = "Scrapes and deduplicates Dutch metal concert agendas into a single navigable page"
+requires-python = ">=3.11"
+dependencies = [
+    "beautifulsoup4>=4.12",
+    "requests>=2.31",
+]
+
+[project.scripts]
+scrapemetal = "scrapemetal.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
