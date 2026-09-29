@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, fields
 from datetime import date
 
 
@@ -15,7 +15,6 @@ class Event:
     city: str
     url: str
     end_date: date | None = None
-    time: str | None = None
     lineup: str | None = None
     ticket_url: str | None = None
     event_url: str | None = None  # the event page on the venue's own website
@@ -35,7 +34,8 @@ class Event:
 
     @classmethod
     def from_json(cls, d: dict) -> Event:
-        d = dict(d)
+        # Ignore fields that older caches have but the model no longer does.
+        d = {k: v for k, v in d.items() if k in {f.name for f in fields(cls)}}
         d["date"] = date.fromisoformat(d["date"])
         d["end_date"] = date.fromisoformat(d["end_date"]) if d.get("end_date") else None
         d["added"] = date.fromisoformat(d["added"]) if d.get("added") else None
@@ -51,7 +51,6 @@ class Concert:
     venue: str
     city: str
     end_date: date | None = None
-    time: str | None = None
     lineup: str | None = None
     ticket_url: str | None = None
     event_url: str | None = None

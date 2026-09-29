@@ -32,7 +32,7 @@ Two listings from different sources are the same concert when their dates overla
 (metalfan multi-day events count as a range), they are in the same city (or the same venue if
 a city is missing), and a band name from one listing appears in the other (with a small
 tolerance for typos). Merged concerts prefer metalfan's band line-up and podiuminfo's
-venue/city/start time (falling back to metalagenda), and link to every source that lists them.
+venue and city (falling back to metalagenda), and link to every source that lists them.
 Cancelled events on metalagenda are skipped.
 
 metalagenda.nl loads its agenda through an AJAX endpoint that is fetched in a single request.

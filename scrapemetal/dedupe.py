@@ -106,7 +106,6 @@ def merge(group: list[Event]) -> Concert:
     return Concert(
         date=min(e.date for e in group),
         end_date=max((e.end_date for e in group if e.end_date), default=None),
-        time=_pick(group, "time", PLACE_PREFERENCE),
         band=_pick(group, "band", BAND_PREFERENCE),
         lineup=_pick(group, "lineup", BAND_PREFERENCE),
         ticket_url=_pick(group, "ticket_url", PLACE_PREFERENCE),
@@ -137,5 +136,5 @@ def group_events(events: list[Event]) -> list[list[Event]]:
 
 def deduplicate(events: list[Event]) -> list[Concert]:
     concerts = [merge(g) for g in group_events(events)]
-    concerts.sort(key=lambda c: (c.date, c.time or "", normalize(c.band)))
+    concerts.sort(key=lambda c: (c.date, normalize(c.band)))
     return concerts

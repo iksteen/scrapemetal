@@ -86,9 +86,9 @@ def test_parse_metalfan_page():
 
 def test_parse_podiuminfo_page():
     events = parse_podiuminfo_page(PODIUMINFO_HTML)
-    assert [(e.date, e.time, e.band, e.venue, e.city) for e in events] == [
-        (date(2026, 9, 30), "20:00", "Integrity + Ringworm", "Baroeg", "Rotterdam"),
-        (date(2026, 10, 1), None, "Coroner", "Nobel", "Leiden"),
+    assert [(e.date, e.band, e.venue, e.city) for e in events] == [
+        (date(2026, 9, 30), "Integrity + Ringworm", "Baroeg", "Rotterdam"),
+        (date(2026, 10, 1), "Coroner", "Nobel", "Leiden"),
     ]
     assert events[0].ticket_url == "https://www.podiuminfo.nl/ticket/99/ca/Integrity/"
     assert events[1].ticket_url is None
@@ -98,7 +98,7 @@ def test_parse_podiuminfo_page():
 def test_dedupe_merges_across_sources():
     concerts = deduplicate([
         ev("metalfan", date(2026, 10, 2), "Belphegor en Krisiun", "Metropool", "Hengelo"),
-        ev("podiuminfo", date(2026, 10, 2), "Belphegor + Krisiun", "Metropool", "Hengelo", time="20:00"),
+        ev("podiuminfo", date(2026, 10, 2), "Belphegor + Krisiun", "Metropool", "Hengelo"),
         ev("metalfan", date(2026, 11, 11), "Enter Shakiri en Holding Absence", "013", "Tilburg"),
         ev("podiuminfo", date(2026, 11, 11), "Enter Shikari", "013", "Tilburg"),
         ev("metalfan", date(2026, 11, 1), "Floor Jansen", "Paradiso", ""),
@@ -118,7 +118,7 @@ def test_dedupe_merges_across_sources():
     assert len(next(c for c in concerts if "Ghost" in c.band).links) == 2
     assert sum(set(c.links) == {"metalfan", "podiuminfo"} for c in concerts) == 5
     belphegor = next(c for c in concerts if c.band.startswith("Belphegor"))
-    assert belphegor.band == "Belphegor en Krisiun" and belphegor.time == "20:00"
+    assert belphegor.band == "Belphegor en Krisiun"
     floor = next(c for c in concerts if c.band == "Floor Jansen")
     assert floor.city == "Amsterdam"
 
@@ -153,9 +153,9 @@ def test_dedupe_merges_three_sources():
     concerts = deduplicate([
         ev("metalagenda", date(2026, 10, 1), "Coroner", "Nobel", "Leiden", lineup="Tar Pond", event_url="https://nobel.nl/x"),
         ev("metalfan", date(2026, 10, 1), "Coroner", "Nobel", "Leiden", lineup="Tar Pond en Schizophrenia"),
-        ev("podiuminfo", date(2026, 10, 1), "Coroner", "Nobel", "Leiden", time="20:00"),
+        ev("podiuminfo", date(2026, 10, 1), "Coroner", "Nobel", "Leiden"),
     ])
     assert len(concerts) == 1
     assert set(concerts[0].links) == {"metalagenda", "metalfan", "podiuminfo"}
-    assert concerts[0].lineup == "Tar Pond en Schizophrenia" and concerts[0].time == "20:00"
+    assert concerts[0].lineup == "Tar Pond en Schizophrenia"
     assert concerts[0].event_url == "https://nobel.nl/x"

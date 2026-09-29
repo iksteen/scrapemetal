@@ -140,7 +140,7 @@ def scrape_metalfan(session: requests.Session, max_pages: int = 3, delay: float 
 
 # --- podiuminfo.nl ---------------------------------------------------------
 
-PODIUMINFO_DATE_RE = re.compile(r",\s+[a-z]+\s+(\d{1,2})\s+([a-z]+)\s+(\d{4})(?:\s+om\s+(\d{1,2}:\d{2}))?")
+PODIUMINFO_DATE_RE = re.compile(r",\s+[a-z]+\s+(\d{1,2})\s+([a-z]+)\s+(\d{4})")
 
 
 def parse_podiuminfo_page(html: str) -> list[Event]:
@@ -157,7 +157,7 @@ def parse_podiuminfo_page(html: str) -> list[Event]:
         if not m:
             log.warning("podiuminfo: no date in %r", link.get("aria-label"))
             continue
-        day, month, year, tm = m.groups()
+        day, month, year = m.groups()
         try:
             d = date(int(year), month_number(month), int(day))
         except (ValueError, KeyError):
@@ -166,7 +166,6 @@ def parse_podiuminfo_page(html: str) -> list[Event]:
         events.append(Event(
             source="podiuminfo",
             date=d,
-            time=tm,
             band=link.get_text(" ", strip=True),
             venue=venue.get_text(" ", strip=True),
             city=city.get_text(" ", strip=True),

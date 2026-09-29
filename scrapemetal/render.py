@@ -14,6 +14,7 @@ MONTHS = ["January", "February", "March", "April", "May", "June", "July",
           "August", "September", "October", "November", "December"]
 
 SOURCE_LABELS = {"metalfan": "Metalfan", "podiuminfo": "Podiuminfo", "metalagenda": "MetalAgenda"}
+CHIP_LABELS = {"metalfan": "MF", "podiuminfo": "PI", "metalagenda": "MA"}
 
 
 def _date_label(c: Concert) -> str:
@@ -25,37 +26,32 @@ def _date_label(c: Concert) -> str:
 
 def _row(c: Concert) -> str:
     search = normalize(" ".join([c.band, c.lineup or "", c.venue, c.city]))
-    links = "".join(
-        f'<a class="src src-{escape(src)}" href="{escape(url)}" target="_blank" rel="noopener">'
-        f"{escape(SOURCE_LABELS.get(src, src))}</a>"
+    chips = "".join(
+        f'<a class="src src-{escape(src)}" href="{escape(url)}" target="_blank" rel="noopener" '
+        f'title="{escape(SOURCE_LABELS.get(src, src))}">{escape(CHIP_LABELS.get(src, src))}</a>'
         for src, url in c.links.items()
     )
-    if c.event_url:
-        links += (
-            f'<a class="src src-icon" href="{escape(c.event_url)}" target="_blank" rel="noopener" '
-            'title="Event page at the venue" aria-label="Event page at the venue">🏛️</a>'
-        )
-    if c.ticket_url:
-        links += (
-            f'<a class="src src-icon" href="{escape(c.ticket_url)}" target="_blank" rel="noopener" '
-            'title="Tickets" aria-label="Tickets">🎫</a>'
-        )
+    # Fixed slots (empty when missing) so the icons line up from row to row.
+    icons = "".join(
+        f'<a class="icon" href="{escape(url)}" target="_blank" rel="noopener" title="{label}" aria-label="{label}">{glyph}</a>'
+        if url else '<span class="icon"></span>'
+        for url, glyph, label in [(c.event_url, "🏛️", "Event page at the venue"), (c.ticket_url, "🎫", "Tickets")]
+    )
 
     lineup = f'<div class="lineup">with {escape(c.lineup)}</div>' if c.lineup else ""
     venue = (
         f'<a href="{escape(c.venue_url)}" target="_blank" rel="noopener">{escape(c.venue)}</a>'
         if c.venue_url else escape(c.venue)
     )
-    time = f'<span class="time">{escape(c.time)}</span>' if c.time else ""
     return (
         f'<tr data-date="{(c.end_date or c.date).isoformat()}" data-city="{escape(city_key(c.city))}" '
         f'data-sources="{escape(" ".join(c.links))}" data-added="{c.added.isoformat() if c.added else ""}" '
         f'data-search="{escape(search)}">'
-        f'<td class="date"><time datetime="{c.date.isoformat()}">{escape(_date_label(c))}</time>{time}</td>'
+        f'<td class="date"><time datetime="{c.date.isoformat()}">{escape(_date_label(c))}</time></td>'
         f'<td class="band"><strong>{escape(c.band)}</strong>{lineup}</td>'
         f'<td class="venue">{venue}</td>'
         f'<td class="city">{escape(c.city)}</td>'
-        f'<td class="links">{links}</td>'
+        f'<td class="links"><span class="icons">{icons}</span><span class="chips">{chips}</span></td>'
         "</tr>"
     )
 
@@ -146,37 +142,42 @@ td { padding: .5rem .7rem; border-top: 1px solid var(--line); vertical-align: to
 tr.newday td { border-top: 2px solid var(--line); }
 tbody tr:hover { background: var(--panel-2); }
 th.date, td.date { white-space: nowrap; width: 9.5rem; }
-th.venue { width: 22%; } th.city { width: 14%; } th.links { width: 15rem; }
+th.venue { width: 22%; } th.city { width: 14%; } th.links { width: 11rem; }
 td { overflow-wrap: anywhere; }
-td.date .time { display: block; color: var(--muted); font-size: .8rem; }
 td.band strong { font-weight: 600; }
 .lineup { color: var(--muted); font-size: .82rem; }
 td.city { white-space: nowrap; }
 td.venue a { color: inherit; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; }
 td.venue a:hover { text-decoration-color: var(--accent); }
-td.links { white-space: nowrap; }
+th.links, td.links { text-align: right; }
+.icons { float: right; white-space: nowrap; }
+.icon { display: inline-block; width: 1.7rem; text-align: center; text-decoration: none; font-family: "Noto Color Emoji", sans-serif; font-size: 1.1rem; line-height: 1.3rem; }
 a.src { display: inline-block; font-size: .75rem; text-decoration: none; padding: .1rem .45rem; border-radius: 4px; margin: 0 .2rem .2rem 0; color: #fff; }
 a.src-metalfan { background: var(--accent); }
 a.src-podiuminfo { background: var(--accent-2); }
 a.src-metalagenda { background: var(--accent-3); }
-a.src-icon { font-family: "Noto Color Emoji", sans-serif; background: none; padding: 0 .2rem; font-size: 1.1rem; line-height: 1; vertical-align: middle; }
 .hidden { display: none !important; }
 .nothing { color: var(--muted); text-align: center; padding: 3rem 0; }
 @media (max-width: 760px) {
-  .toolbar select { flex: 1 1 30%; }
+  .toolbar select { flex: 1 1 8rem; }
   thead { display: none; }
   table, tbody, tr, td { display: block; }
-  tr { display: grid !important; grid-template-columns: 1fr auto; padding: .55rem .7rem; border-top: 1px solid var(--line); }
+  tr {
+    display: grid !important; grid-template-columns: minmax(0, 1fr) auto; column-gap: .75rem; align-items: baseline;
+    grid-template-areas: "date links" "band band" "venue city";
+    padding: .55rem .7rem; border-top: 1px solid var(--line);
+  }
   tr.hidden { display: none !important; }
   td, tr.newday td { border: 0; padding: 0; }
   tr.newday { border-top: 2px solid var(--line); }
-  td.date { grid-column: 1; color: var(--muted); font-size: .85rem; width: auto; }
-  td.date .time { display: inline; margin-left: .4rem; }
-  td.links { grid-column: 2; grid-row: 1; }
-  td.band { grid-column: 1 / -1; }
+  td.date { grid-area: date; color: var(--muted); font-size: .85rem; width: auto; }
+  td.links { grid-area: links; justify-self: end; display: flex; flex-direction: row-reverse; align-items: center; gap: .3rem; margin-right: -.35rem; }
+  .icons { float: none; }
+  .chips { display: flex; }
+  td.band { grid-area: band; }
   td.venue, td.city { color: var(--muted); font-size: .88rem; }
-  td.venue { grid-column: 1; }
-  td.city { grid-column: 2; text-align: right; padding-left: .5rem; }
+  td.venue { grid-area: venue; }
+  td.city { grid-area: city; text-align: right; }
 }
 </style>
 </head>

@@ -62,7 +62,6 @@ def write_output(concerts: list[Concert], status: dict[str, dict], out_dir: Path
         {
             "date": c.date.isoformat(),
             "end_date": c.end_date.isoformat() if c.end_date else None,
-            "time": c.time,
             "band": c.band,
             "lineup": c.lineup,
             "venue": c.venue,
