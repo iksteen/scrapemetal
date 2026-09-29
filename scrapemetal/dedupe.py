@@ -107,6 +107,8 @@ def merge(group: list[Event]) -> Concert:
         lineup=_pick(group, "lineup", BAND_PREFERENCE),
         ticket_url=_pick(group, "ticket_url", PLACE_PREFERENCE),
         event_url=_pick(group, "event_url", PLACE_PREFERENCE),
+        # A listing without a date predates tracking, so the concert is not new.
+        added=None if any(e.added is None for e in group) else min(e.added for e in group),
         venue=_pick(group, "venue", PLACE_PREFERENCE) or "",
         city=_pick(group, "city", PLACE_PREFERENCE) or "",
         links={e.source: e.url for e in sorted(group, key=lambda e: e.source)},

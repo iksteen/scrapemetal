@@ -49,7 +49,8 @@ def _row(c: Concert) -> str:
     time = f'<span class="time">{escape(c.time)}</span>' if c.time else ""
     return (
         f'<tr data-date="{(c.end_date or c.date).isoformat()}" data-city="{escape(city_key(c.city))}" '
-        f'data-sources="{escape(" ".join(c.links))}" data-search="{escape(search)}">'
+        f'data-sources="{escape(" ".join(c.links))}" data-added="{c.added.isoformat() if c.added else ""}" '
+        f'data-search="{escape(search)}">'
         f'<td class="date"><time datetime="{c.date.isoformat()}">{escape(_date_label(c))}</time>{time}</td>'
         f'<td class="band"><strong>{escape(c.band)}</strong>{lineup}</td>'
         f'<td class="venue">{venue}</td>'
@@ -127,10 +128,11 @@ h1 span { color: var(--accent); }
 .meta .err { color: var(--accent); }
 .toolbar { position: sticky; top: 0; z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
 .toolbar-inner { max-width: 1200px; margin: 0 auto; padding: .6rem 1rem; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
-.toolbar input, .toolbar select { background: var(--panel); color: var(--text); border: 1px solid var(--line); border-radius: 6px; padding: .45rem .6rem; font: inherit; }
-.toolbar input { flex: 1 1 16rem; min-width: 0; }
+.toolbar input[type=search], .toolbar select { background: var(--panel); color: var(--text); border: 1px solid var(--line); border-radius: 6px; padding: .45rem .6rem; font: inherit; }
+.toolbar input[type=search] { flex: 1 1 16rem; min-width: 0; }
 .toolbar select { flex: 0 1 12rem; min-width: 0; }
-.toolbar label { color: var(--muted); font-size: .85rem; display: flex; gap: .3rem; align-items: center; }
+.toolbar label { color: var(--muted); font-size: .85rem; white-space: nowrap; display: flex; gap: .3rem; align-items: center; }
+.toolbar input[type=checkbox] { accent-color: var(--accent); margin: 0; }
 .count { color: var(--muted); font-size: .85rem; margin-left: auto; }
 nav.months { max-width: 1200px; margin: 0 auto; padding: 0 1rem .6rem; display: flex; gap: .35rem; overflow-x: auto; }
 nav.months a { color: var(--text); text-decoration: none; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: .15rem .7rem; white-space: nowrap; font-size: .85rem; }
@@ -188,6 +190,7 @@ a.src-icon { font-family: "Noto Color Emoji", sans-serif; background: none; padd
     <input id="q" type="search" placeholder="Search band, venue or city… (press /)" autocomplete="off">
     <select id="city"><option value="">All cities</option>{{city_options}}</select>
     <select id="source"><option value="">All sources</option><option value="both">On multiple sites</option>{{source_options}}</select>
+    <label><input type="checkbox" id="recent"> Added this week</label>
     <span class="count" id="count"></span>
   </div>
   <nav class="months">{{month_nav}}</nav>
@@ -199,9 +202,12 @@ a.src-icon { font-family: "Noto Color Emoji", sans-serif; background: none; padd
 <script>
 (() => {
   const q = document.getElementById('q'), city = document.getElementById('city'), source = document.getElementById('source');
+  const recent = document.getElementById('recent');
   const rows = [...document.querySelectorAll('tbody tr')];
   const today = new Date(); today.setHours(0, 0, 0, 0);
-  const todayIso = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
+  const iso = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  const todayIso = iso(today);
+  const weekAgoIso = iso(new Date(today.getFullYear(), today.getMonth(), today.getDate() - 6));
   const norm = s => s.normalize('NFKD').replace(/[\\u0300-\\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 
   function apply() {
@@ -211,6 +217,7 @@ a.src-icon { font-family: "Noto Color Emoji", sans-serif; background: none; padd
       const srcs = r.dataset.sources.split(' ');
       const ok = r.dataset.date >= todayIso
         && (!c || r.dataset.city === c)
+        && (!recent.checked || r.dataset.added >= weekAgoIso)
         && (!s || (s === 'both' ? srcs.length > 1 : srcs.length === 1 && srcs[0] === s.slice(5)))
         && terms.every(t => r.dataset.search.includes(t));
       r.classList.toggle('hidden', !ok);
@@ -230,12 +237,15 @@ a.src-icon { font-family: "Noto Color Emoji", sans-serif; background: none; padd
     if (q.value) params.set('q', q.value);
     if (c) params.set('city', c);
     if (s) params.set('source', s);
+    if (recent.checked) params.set('recent', '1');
     history.replaceState(null, '', (params.toString() ? '?' + params : location.pathname) + location.hash);
   }
 
   const params = new URLSearchParams(location.search);
   q.value = params.get('q') || ''; city.value = params.get('city') || ''; source.value = params.get('source') || '';
+  recent.checked = params.get('recent') === '1';
   q.addEventListener('input', apply); city.addEventListener('change', apply); source.addEventListener('change', apply);
+  recent.addEventListener('change', apply);
   document.addEventListener('keydown', e => {
     if (e.key === '/' && document.activeElement !== q) { e.preventDefault(); q.focus(); }
     else if (e.key === 'Escape' && document.activeElement === q) { q.value = ''; apply(); }

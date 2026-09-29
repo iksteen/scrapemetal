@@ -24,7 +24,7 @@ Cron alternative (serve `public/` with any web server):
 ```
 
 The page has a search box (press `/`), a city filter, a source filter (e.g. "only on
-metalfan") and month jump links. Filters are kept in the URL so they can be bookmarked.
+metalfan"), an "added this week" filter and month jump links. Filters are kept in the URL so they can be bookmarked.
 
 ## How deduplication works
 
@@ -66,6 +66,14 @@ link to it.
 
 Raw per-source results are cached in `data/`. If a source fails to scrape, the last good
 result is used and the page marks that source as stale.
+
+## Added this week
+
+`data/first_seen.json` records when each listing was first seen (by podiuminfo's and
+metalagenda's own ids; by date, title and venue for metalfan, so an edited metalfan title
+counts as new). A concert's added date is the earliest of its merged listings. Listings that
+were already there when a source was first scraped have no date and never count as new, so the
+filter fills up over the first week. Listings are forgotten once the concert is over.
 
 ## Tests
 

@@ -45,7 +45,7 @@ PODIUMINFO_HTML = """
 
 METALAGENDA_HTML = """
 <div id="cont_left"><div class="dateheader hanginthere" id="2026-09-30"><span class="bg">3</span> <sub>woensdag</sub></div>
-<div class="agendapunt"><div class="left"><a href="https://baroeg.nl/productie/integrity/" target="_blank"><h3> Live Hard Bookings presents: Integrity + Ringworm + World I Hate</h3></a><a href="/venues/baroeg" target="_blank">Baroeg</a> <a href="/p/rotterdam" target="_blank">Rotterdam</a><div style="font-size: 10px;"><span style="font-weight: bold">Bands: </span> integrity | <a href="https://www.metal-archives.com/bands/ringworm/81102">ringworm</a> | world i hate</div></div><div class="right blck"></div></div>
+<div class="agendapunt"><div class="left"><a href="https://baroeg.nl/productie/integrity/" target="_blank"><h3> Live Hard Bookings presents: Integrity + Ringworm + World I Hate</h3></a><a href="/venues/baroeg" target="_blank">Baroeg</a> <a href="/p/rotterdam" target="_blank">Rotterdam</a><div style="font-size: 10px;"><span style="font-weight: bold">Bands: </span> integrity | <a href="https://www.metal-archives.com/bands/ringworm/81102">ringworm</a> | world i hate</div></div><div class="right blck"><a href="/ical/7018" title="Voeg toe aan je agenda"></a></div></div>
 <div class="dateheader hanginthere" id="2026-10-01"><span class="bg">0</span> <sub>donderdag</sub></div>
 <div class="agendapunt"><div class="left"><a href="https://nobel.nl/agenda/coroner" target="_blank"><h3> Coroner</h3></a><a href="/venues/nobel" target="_blank">Nobel</a> <a href="/p/leiden" target="_blank">Leiden</a><div style="font-size: 10px;"><span style="font-weight: bold">Bands: </span> coroner | tar pond | onbekend</div></div></div>
 <div class="agendapunt"><div class="left"><a href="https://hedon-zwolle.nl/x" target="_blank"><h3><div class="soldout">uitverkocht</div> A LIFE ALIGNED</h3></a><a href="/venues/hedon" target="_blank">Hedon</a> <a href="/p/zwolle" target="_blank">Zwolle</a></div></div>
@@ -92,6 +92,7 @@ def test_parse_podiuminfo_page():
     ]
     assert events[0].ticket_url == "https://www.podiuminfo.nl/ticket/99/ca/Integrity/"
     assert events[1].ticket_url is None
+    assert [e.uid for e in events] == ["podiuminfo:1", "podiuminfo:2"]
 
 
 def test_dedupe_merges_across_sources():
@@ -138,6 +139,7 @@ def test_parse_metalagenda_page():
     assert events[0].url == "https://www.metalagenda.nl/?datum=2026-09-30"
     assert events[0].event_url == "https://baroeg.nl/productie/integrity/"
     assert events[3].event_url is None  # "geen eventpagina"
+    assert events[0].uid == "metalagenda:7018" and events[1].uid is None
 
 
 def test_dedupe_merges_three_sources():

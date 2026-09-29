@@ -12,6 +12,7 @@ from datetime import date, datetime
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
+from .added import apply_first_seen, update_first_seen
 from .dedupe import deduplicate
 from .models import Concert, Event
 from .render import render
@@ -39,6 +40,7 @@ def _load_cached(data_dir: Path, name: str) -> tuple[list[Event], str | None]:
 def load_cached_events(data_dir: Path) -> list[Event]:
     """Events from the last successful scrape of each source, with resolved ticket links."""
     events = [e for name in SOURCES for e in _load_cached(data_dir, name)[0]]
+    apply_first_seen(events, data_dir / "first_seen.json")
     cache = data_dir / "tickets.json"
     tickets = json.loads(cache.read_text(encoding="utf-8")) if cache.exists() else {}
     for e in events:
@@ -69,6 +71,7 @@ def write_output(concerts: list[Concert], status: dict[str, dict], out_dir: Path
             "links": c.links,
             "tickets": c.ticket_url,
             "event_page": c.event_url,
+            "added": c.added.isoformat() if c.added else None,
         } for c in concerts
     ], indent=1, ensure_ascii=False))
 
@@ -102,6 +105,8 @@ def run_once(data_dir: Path, out_dir: Path, venues_path: Path) -> None:
                 log.warning("Using %d cached %s events from %s", len(found), name, scraped_at)
             status[name] = {"ok": False, "count": len(found), "error": str(exc)}
         events.extend(found)
+
+    update_first_seen(events, data_dir / "first_seen.json", date.today())
 
     try:
         resolve_ticket_urls(session, events, data_dir / "tickets.json")

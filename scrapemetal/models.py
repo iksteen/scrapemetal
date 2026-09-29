@@ -19,6 +19,8 @@ class Event:
     lineup: str | None = None
     ticket_url: str | None = None
     event_url: str | None = None  # the event page on the venue's own website
+    uid: str | None = None  # the source's own id for the listing, if it has one
+    added: date | None = None  # first seen; None if it predates tracking (see added.py)
 
     @property
     def last_date(self) -> date:
@@ -28,6 +30,7 @@ class Event:
         d = asdict(self)
         d["date"] = self.date.isoformat()
         d["end_date"] = self.end_date.isoformat() if self.end_date else None
+        d["added"] = self.added.isoformat() if self.added else None
         return d
 
     @classmethod
@@ -35,6 +38,7 @@ class Event:
         d = dict(d)
         d["date"] = date.fromisoformat(d["date"])
         d["end_date"] = date.fromisoformat(d["end_date"]) if d.get("end_date") else None
+        d["added"] = date.fromisoformat(d["added"]) if d.get("added") else None
         return cls(**d)
 
 
@@ -51,5 +55,6 @@ class Concert:
     lineup: str | None = None
     ticket_url: str | None = None
     event_url: str | None = None
+    added: date | None = None
     venue_url: str | None = None
     links: dict[str, str] = field(default_factory=dict)

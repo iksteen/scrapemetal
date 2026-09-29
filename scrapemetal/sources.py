@@ -172,6 +172,7 @@ def parse_podiuminfo_page(html: str) -> list[Event]:
             city=city.get_text(" ", strip=True),
             url=link["href"],
             ticket_url=ticket["href"] if (ticket := row.select_one('.td_5 a[href*="/ticket/"]')) else None,
+            uid=f"podiuminfo:{cid.group(1)}" if (cid := re.search(r"/concert/(\d+)/", link["href"])) else None,
         ))
     return events
 
@@ -229,6 +230,7 @@ def parse_metalagenda_page(html: str) -> list[Event]:
         band = title.get_text(" ", strip=True)
         event_link = title.find_parent("a", href=True)
         event_url = event_link["href"] if event_link and event_link["href"].startswith(("http://", "https://")) else None
+        ical = el.select_one('a[href^="/ical/"]')
 
         # "Bands: a | b | c" often names support acts that are missing from the title.
         lineup = None
@@ -246,6 +248,7 @@ def parse_metalagenda_page(html: str) -> list[Event]:
             lineup=lineup,
             url=f"{METALAGENDA_URL}?datum={day.isoformat()}",
             event_url=event_url,
+            uid=f"metalagenda:{ical['href'].rsplit('/', 1)[-1]}" if ical else None,
         ))
     return events
 
