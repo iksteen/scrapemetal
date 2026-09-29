@@ -113,11 +113,9 @@ TEMPLATE = """<!doctype html>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&text=%F0%9F%8E%AB%F0%9F%8F%9B%EF%B8%8F&display=swap">
 <style>
 :root {
+  color-scheme: dark;
   --bg: #0f0f10; --panel: #18181b; --panel-2: #202024; --line: #2c2c31;
   --text: #e7e7ea; --muted: #9a9aa3; --accent: #d7263d; --accent-2: #3a86ff; --accent-3: #7a4fd6;
-}
-@media (prefers-color-scheme: light) {
-  :root { --bg: #f6f6f7; --panel: #ffffff; --panel-2: #f0f0f2; --line: #dedee3; --text: #18181b; --muted: #62626b; }
 }
 * { box-sizing: border-box; }
 html { scroll-padding-top: 8.5rem; }
