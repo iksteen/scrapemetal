@@ -107,9 +107,16 @@ def test_dedupe_merges_across_sources():
         ev("podiuminfo", date(2026, 10, 10), "Soulcrusher Festival", "Doornroosje", "Nijmegen"),
         ev("metalfan", date(2026, 11, 11), "Fabio Lione", "Amsterdam", ""),  # city-only location
         ev("podiuminfo", date(2026, 11, 11), "Fabio Lione", "Melkweg", "Amsterdam"),
+        ev("metalagenda", date(2026, 10, 10), "Up the Irons – Iron Maiden Tribute", "Capsloc", "Capelle ad IJssel"),
+        ev("podiuminfo", date(2026, 10, 10), "Up the Irons - Iron Maiden Tribute", "Capsloc", "Capelle aan den IJssel"),
+        ev("metalagenda", date(2026, 10, 12), "Ritual — The Dutch Ghost Experience", "Boerderij", "Zoetermeer"),
+        ev("metalfan", date(2026, 10, 12), "The Dutch Ghost Experience", "Boerderij", "Zoetermeer"),
     ])
-    assert len(concerts) == 5
-    assert all(set(c.links) == {"metalfan", "podiuminfo"} for c in concerts)
+    assert len(concerts) == 7
+    irons = next(c for c in concerts if c.venue == "Capsloc")
+    assert irons.city == "Capelle aan den IJssel" and len(irons.links) == 2
+    assert len(next(c for c in concerts if "Ghost" in c.band).links) == 2
+    assert sum(set(c.links) == {"metalfan", "podiuminfo"} for c in concerts) == 5
     belphegor = next(c for c in concerts if c.band.startswith("Belphegor"))
     assert belphegor.band == "Belphegor en Krisiun" and belphegor.time == "20:00"
     floor = next(c for c in concerts if c.band == "Floor Jansen")

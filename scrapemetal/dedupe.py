@@ -27,7 +27,9 @@ CITY_ALIASES = {
     "rottterdam": "rotterdam",
 }
 
-ARTIST_SPLIT_RE = re.compile(r"\s*(?:,|\+|&|/|\s-\s|\s–\s|:|\b[eé]n\b|\band\b|\bw/|\bwith\b|\bguests?\b|\bsupport\b)\s*", re.I)
+DASHES = "-‐‑‒–—―−"  # hyphen-minus, hyphens, figure/en/em dashes, horizontal bar, minus
+
+ARTIST_SPLIT_RE = re.compile(rf"\s*(?:,|\+|&|/|\s[{DASHES}]\s|:|\b[eé]n\b|\band\b|\bw/|\bwith\b|\bguests?\b|\bsupport\b)\s*", re.I)
 NOISE_WORDS = {"the", "tour", "live", "support", "guests", "special", "and", "en", "met", "tba"}
 
 _TRANSLITERATE = str.maketrans({"æ": "ae", "ø": "o", "ß": "ss", "œ": "oe", "đ": "d", "ł": "l"})
@@ -42,6 +44,8 @@ def normalize(text: str) -> str:
 
 def city_key(city: str) -> str:
     key = normalize(re.sub(r"\(.*?\)", "", city))
+    # "Capelle aan den IJssel" is also written "Capelle a/d IJssel" or "Capelle ad IJssel".
+    key = re.sub(r"\b(?:a d|ad|aan de|aan den|aan het)\b", "aan", key)
     return CITY_ALIASES.get(key, key)
 
 
