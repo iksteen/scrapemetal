@@ -67,3 +67,14 @@ def test_apply_moves_city_only_location_to_city():
     d.apply([city_only, venue_only])
     assert (city_only.venue, city_only.city, city_only.venue_url) == ("", "Brussel", None)
     assert (venue_only.venue, venue_only.city, venue_only.venue_url) == ("Paradiso", "", "https://www.paradiso.nl/")
+
+
+def test_apply_uses_main_name_and_keeps_aliases():
+    from datetime import date
+    from scrapemetal.models import Concert
+    d = VenueDirectory(ENTRIES)
+    alias = Concert(date=date(2026, 11, 1), band="x", venue="Metropool Enschede", city="Enschede")
+    main = Concert(date=date(2026, 11, 2), band="y", venue="metropool", city="Enschede")
+    d.apply([alias, main])
+    assert (alias.venue, alias.venue_aliases) == ("Metropool", ["Metropool Enschede"])
+    assert (main.venue, main.venue_aliases) == ("Metropool", ["metropool", "Metropool Enschede"])

@@ -26,13 +26,13 @@ def venue_key(name: str) -> str:
 
 class VenueDirectory:
     def __init__(self, entries: list[dict]):
-        self.by_place: dict[tuple[str, str], str] = {}
-        self.by_name: dict[str, set[str]] = {}
+        self.by_place: dict[tuple[str, str], dict] = {}
+        self.by_name: dict[str, list[dict]] = {}
         for entry in entries:
             for name in [entry["name"], *entry.get("aliases", [])]:
                 key = venue_key(name)
-                self.by_place[(key, city_key(entry.get("city", "")))] = entry["url"]
-                self.by_name.setdefault(key, set()).add(entry["url"])
+                self.by_place[(key, city_key(entry.get("city", "")))] = entry
+                self.by_name.setdefault(key, []).append(entry)
 
     @classmethod
     def load(cls, path: Path) -> VenueDirectory:
@@ -50,21 +50,29 @@ class VenueDirectory:
             entries.append(entry)
         return cls(entries)
 
-    def lookup(self, venue: str, city: str) -> str | None:
+    def find(self, venue: str, city: str) -> dict | None:
         key = venue_key(venue)
-        if url := self.by_place.get((key, city_key(city))):
-            return url
+        if entry := self.by_place.get((key, city_key(city))):
+            return entry
         if not city_key(city):
             # City unknown: only use the name if it identifies a single venue.
-            urls = self.by_name.get(key, set())
-            if len(urls) == 1:
-                return next(iter(urls))
+            entries = {id(e): e for e in self.by_name.get(key, [])}
+            if len(entries) == 1:
+                return next(iter(entries.values()))
         return None
+
+    def lookup(self, venue: str, city: str) -> str | None:
+        entry = self.find(venue, city)
+        return entry["url"] if entry else None
 
     def apply(self, concerts: list[Concert]) -> None:
         for c in concerts:
-            c.venue_url = self.lookup(c.venue, c.city)
-            if not c.venue_url and not city_key(c.city) and venue_key(c.venue) not in self.by_name:
+            if entry := self.find(c.venue, c.city):
+                # Show every venue under its main name, but keep the other spellings searchable.
+                names = dict.fromkeys([c.venue, *entry.get("aliases", [])])
+                c.venue_aliases = [name for name in names if name != entry["name"]]
+                c.venue, c.venue_url = entry["name"], entry["url"]
+            elif not city_key(c.city) and venue_key(c.venue) not in self.by_name:
                 # A lone location that isn't a known venue ("Brussel", "Wacken (Duitsland)") is a city.
                 c.venue, c.city = "", c.venue
 

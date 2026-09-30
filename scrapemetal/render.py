@@ -36,7 +36,7 @@ def _band_url(c: Concert) -> str:
 
 
 def _row(c: Concert) -> str:
-    search = normalize(" ".join([c.band, c.lineup or "", c.venue, c.city]))
+    search = normalize(" ".join([c.band, c.lineup or "", c.venue, *c.venue_aliases, c.city]))
     chips = "".join(
         f'<a class="src src-{escape(src)}" href="{escape(url)}" target="_blank" rel="noopener" '
         f'title="{escape(SOURCE_LABELS.get(src, src))}">{escape(CHIP_LABELS.get(src, src))}</a>'

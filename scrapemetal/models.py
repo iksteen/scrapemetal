@@ -56,4 +56,5 @@ class Concert:
     event_url: str | None = None
     added: date | None = None
     venue_url: str | None = None
+    venue_aliases: list[str] = field(default_factory=list)  # other spellings, for search
     links: dict[str, str] = field(default_factory=dict)
