@@ -5,6 +5,7 @@ from __future__ import annotations
 from collections import defaultdict
 from datetime import datetime
 from html import escape
+from urllib.parse import quote_plus
 
 from .dedupe import city_key, normalize
 from .models import Concert
@@ -12,6 +13,9 @@ from .models import Concert
 WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 MONTHS = ["January", "February", "March", "April", "May", "June", "July",
           "August", "September", "October", "November", "December"]
+# For web searches: most venues are Dutch and write their dates in Dutch.
+DUTCH_MONTHS = ["januari", "februari", "maart", "april", "mei", "juni", "juli",
+                "augustus", "september", "oktober", "november", "december"]
 
 SOURCE_LABELS = {"metalfan": "Metalfan", "podiuminfo": "Podiuminfo", "metalagenda": "MetalAgenda"}
 CHIP_LABELS = {"metalfan": "MF", "podiuminfo": "PI", "metalagenda": "MA"}
@@ -22,6 +26,13 @@ def _date_label(c: Concert) -> str:
     if c.end_date:
         label += f" – {WEEKDAYS[c.end_date.weekday()]} {c.end_date.day} {MONTHS[c.end_date.month - 1][:3]}"
     return label
+
+
+def _band_url(c: Concert) -> str:
+    """The venue's event page, else the ticket shop, else a web search for the show."""
+    day = f"{c.date.day} {DUTCH_MONTHS[c.date.month - 1]} {c.date.year}"
+    query = " ".join(part for part in [c.venue, c.city, c.band, day] if part)
+    return c.event_url or c.ticket_url or f"https://www.google.com/search?q={quote_plus(query)}"
 
 
 def _row(c: Concert) -> str:
@@ -48,7 +59,7 @@ def _row(c: Concert) -> str:
         f'data-sources="{escape(" ".join(c.links))}" data-added="{c.added.isoformat() if c.added else ""}" '
         f'data-search="{escape(search)}">'
         f'<td class="date"><time datetime="{c.date.isoformat()}">{escape(_date_label(c))}</time></td>'
-        f'<td class="band"><strong>{escape(c.band)}</strong>{lineup}</td>'
+        f'<td class="band"><a href="{escape(_band_url(c))}" target="_blank" rel="noopener"><strong>{escape(c.band)}</strong></a>{lineup}</td>'
         f'<td class="venue">{venue}</td>'
         f'<td class="city">{escape(c.city)}</td>'
         f'<td class="links"><span class="icons">{icons}</span><span class="chips">{chips}</span></td>'
@@ -147,8 +158,8 @@ td { overflow-wrap: anywhere; }
 td.band strong { font-weight: 600; }
 .lineup { color: var(--muted); font-size: .82rem; }
 td.city { white-space: nowrap; }
-td.venue a { color: inherit; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; }
-td.venue a:hover { text-decoration-color: var(--accent); }
+td.band a, td.venue a { color: inherit; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; }
+td.band a:hover, td.venue a:hover { text-decoration-color: var(--accent); }
 th.links, td.links { text-align: right; }
 .icons { float: right; white-space: nowrap; }
 .icon { display: inline-block; width: 1.7rem; text-align: center; text-decoration: none; font-family: "Noto Color Emoji", sans-serif; font-size: 1.1rem; line-height: 1.3rem; }
