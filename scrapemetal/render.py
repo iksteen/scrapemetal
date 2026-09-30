@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import base64
 from collections import defaultdict
 from datetime import datetime
 from html import escape
+from pathlib import Path
 from urllib.parse import quote_plus
 
 from .dedupe import city_key, normalize
@@ -19,6 +21,9 @@ DUTCH_MONTHS = ["januari", "februari", "maart", "april", "mei", "juni", "juli",
 
 SOURCE_LABELS = {"metalfan": "Metalfan", "podiuminfo": "Podiuminfo", "metalagenda": "MetalAgenda"}
 CHIP_LABELS = {"metalfan": "MF", "podiuminfo": "PI", "metalagenda": "MA"}
+
+# PNG fallback for browsers without SVG favicons (Safari); 🤘 rendered from Noto Color Emoji.
+FAVICON_PNG = base64.b64encode(Path(__file__).with_name("favicon.png").read_bytes()).decode()
 
 
 def _date_label(c: Concert) -> str:
@@ -101,6 +106,7 @@ def render(concerts: list[Concert], status: dict[str, dict], generated: datetime
     )
 
     return (TEMPLATE
+            .replace("{{favicon_png}}", FAVICON_PNG)
             .replace("{{generated}}", escape(generated.strftime("%Y-%m-%d %H:%M")))
             .replace("{{total}}", str(len(concerts)))
             .replace("{{status}}", status_html)
@@ -116,7 +122,8 @@ TEMPLATE = """<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Metal Agenda</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%F0%9F%A4%98</text></svg>">
+<link rel="icon" type="image/png" sizes="180x180" href="data:image/png;base64,{{favicon_png}}">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%F0%9F%A4%98</text></svg>">
 <!-- Only the 🎫 glyph (text=), so ticket links render even without a system emoji font. -->
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&text=%F0%9F%8E%AB%F0%9F%8F%9B%EF%B8%8F&display=swap">
