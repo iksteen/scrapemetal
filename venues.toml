@@ -9,6 +9,7 @@
 name = "TivoliVredenburg"
 city = "Utrecht"
 url = "https://www.tivolivredenburg.nl/"
+aliases = ["Tivoli Vredenburg"]
 
 [[venue]]
 name = "013"
@@ -181,7 +182,7 @@ url = "https://www.poppodium-volt.nl/"
 name = "Spot"
 city = "Groningen"
 url = "https://www.spotgroningen.nl/"
-aliases = ["SPOT / De Oosterpoort", "Oosterpoort"]
+aliases = ["SPOT / De Oosterpoort", "Oosterpoort / SPOT", "Oosterpoort"]
 
 [[venue]]
 name = "Podium Victorie"
@@ -230,6 +231,7 @@ url = "https://p60.nl/"
 name = "Bolwerk"
 city = "Sneek"
 url = "https://www.bolwerk.nl/"
+aliases = ["Poort [Locatie Bolwerk]"]
 
 [[venue]]
 name = "Grenswerk"
@@ -413,6 +415,7 @@ url = "https://www.carambole-winschoten.nl/"
 name = "The Jack"
 city = "Eindhoven"
 url = "https://www.cafethejack.nl/"
+aliases = ["Café The Jack"]
 
 [[venue]]
 name = "Sound Dog"
@@ -995,6 +998,7 @@ url = "https://www.kennemertheater.nl/"
 name = "Ijssportcentrum"
 city = "Eindhoven"
 url = "https://ijssportcentrumeindhoven.sportfondsen.nl/"
+aliases = ["IJsbaan Eindhoven"]
 
 # no website of its own
 [[venue]]
@@ -1002,3 +1006,383 @@ name = "Rockcafé Spider"
 city = "Balk"
 url = "https://www.facebook.com/p/Rockcaf%C3%A9-Spider-61578835755313/"
 aliases = ["Rockcafé", "Cafe Spider", "Spider"]
+
+[[venue]]
+name = "SETZ Huiskamer & Slijterij"
+city = "Aalten"
+url = "https://www.setz.tv/"
+
+[[venue]]
+name = "Rock Club The Cave"
+city = "Amsterdam"
+url = "https://www.thecaveamsterdam.nl/"
+
+[[venue]]
+name = "De Pit"
+city = "Terneuzen"
+url = "https://www.poppodiumdepit.nl/"
+
+# no website of its own
+[[venue]]
+name = "Café Bluff"
+city = "Heerlen"
+url = "https://www.facebook.com/CafeBluff/"
+
+[[venue]]
+name = "Café de Walrus"
+city = "Groningen"
+url = "https://cafedewalrus.nl/"
+
+[[venue]]
+name = "De Flux"
+city = "Zaandam"
+url = "https://www.podiumdeflux.nl/"
+
+[[venue]]
+name = "Toekomstmuziek"
+city = "Amsterdam"
+url = "https://www.toekomstmuziek.com/"
+
+# no website of its own
+[[venue]]
+name = "Café de Trap Af"
+city = "Papendrecht"
+url = "https://www.facebook.com/CafeDeTrapAf/"
+
+# no website of its own
+[[venue]]
+name = "Waalhalla"
+city = "Nijmegen"
+url = "https://www.facebook.com/Waalhalla/"
+
+[[venue]]
+name = "Hal 25"
+city = "Alkmaar"
+url = "https://hal25.nl/"
+
+[[venue]]
+name = "Into The Grave"
+city = "Leeuwarden"
+url = "https://intothegrave.nl/"
+
+# no website of its own
+[[venue]]
+name = "Zeeltje Rock"
+city = "Deest"
+url = "https://www.facebook.com/ZeeltjeRock/"
+
+[[venue]]
+name = "Rockcafe Taste"
+city = "Groenlo"
+url = "https://rockcafetaste.nl/"
+
+[[venue]]
+name = "Studio Gonz"
+city = "Gouda"
+url = "https://www.studiogonz.nl/"
+
+[[venue]]
+name = "Blue Collar Café"
+city = "Eindhoven"
+url = "https://www.bluecollarcafe.nl/"
+
+[[venue]]
+name = "JC Kompleks"
+city = "Heerhugowaard"
+url = "https://kompleks.nl/"
+
+[[venue]]
+name = "Café Rocks"
+city = "Enschede"
+url = "https://caferocks.nl/"
+aliases = ["Café Rocks Enschede"]
+
+[[venue]]
+name = "De Meulvliet"
+city = "Tholen"
+url = "https://meulvliet.nl/"
+
+[[venue]]
+name = "Alte Weberei"
+city = "Nordhorn Duitsland"
+url = "https://alteweberei.de/"
+
+[[venue]]
+name = "The Little Church"
+city = "Almelo"
+url = "https://thelittlechurch.nl/"
+
+[[venue]]
+name = "Den Bolder"
+city = "Waspik"
+url = "https://www.denbolder.nl/"
+
+[[venue]]
+name = "Oefenbunker"
+city = "Landgraaf"
+url = "https://www.oefenbunker.com/"
+
+[[venue]]
+name = "Metalcafé De Witte Wolf"
+city = "Groningen"
+url = "https://www.metalcafegroningen.nl/"
+
+[[venue]]
+name = "De Zon"
+city = "Bodegraven"
+url = "https://www.dezonbodegraven.nl/"
+aliases = ["SSCB De Zon"]
+
+[[venue]]
+name = "Timeout"
+city = "Gemert"
+url = "https://time-out.nl/"
+
+[[venue]]
+name = "Pitfest"
+city = "Emmen"
+url = "https://www.pitfest.nl/"
+
+[[venue]]
+name = "Grand Café Carambole"
+city = "Winschoten"
+url = "https://www.carambole-winschoten.nl/"
+
+[[venue]]
+name = "Wijkcentrum Krakeel"
+city = "Hoogeveen"
+url = "https://www.swckrakeel.nl/"
+aliases = ["Stichting Wijkcentrum Krakeel"]
+
+[[venue]]
+name = "N201"
+city = "Aalsmeer"
+url = "https://n201.nl/"
+
+[[venue]]
+name = "'t Uivernest"
+city = "Hank"
+url = "https://uivernesthank.nl/"
+
+[[venue]]
+name = "Paraplufabriek"
+city = "Nijmegen"
+url = "https://www.plu.nl/"
+aliases = ["Paraplufabrieken"]
+
+[[venue]]
+name = "Manifesto"
+city = "Hoorn"
+url = "https://manifesto-hoorn.nl/"
+
+[[venue]]
+name = "De Groote Weiver"
+city = "Wormerveer"
+url = "https://degrooteweiver.nl/"
+
+# no website of its own
+[[venue]]
+name = "Herberg Music Hall"
+city = "Ommen"
+url = "https://www.facebook.com/herbergommen/"
+aliases = ["De Herberg"]
+
+[[venue]]
+name = "De Lantaarn"
+city = "Hellendoorn"
+url = "https://lantaarn.nl/"
+
+[[venue]]
+name = "De Vrolijke Driehoek"
+city = "Tilburg"
+url = "https://devrolijkedriehoek.nl/"
+
+[[venue]]
+name = "Café Take Five"
+city = "Venlo"
+url = "https://cafetake5.nl/"
+aliases = ["Cafe Take 5", "Take Five"]
+
+[[venue]]
+name = "De Soeverein"
+city = "Lommel"
+url = "https://www.lommel.be/soeverein"
+
+[[venue]]
+name = "De Beuk"
+city = "Barendrecht"
+url = "https://beukonline.nl/"
+
+[[venue]]
+name = "Trapop"
+city = "Utrecht"
+url = "https://www.trapoputrecht.nl/"
+
+[[venue]]
+name = "'t Ukien"
+city = "Kampen"
+url = "https://ukien.nl/"
+
+[[venue]]
+name = "Kulturhus Borne"
+city = "Borne"
+url = "https://www.kulturhusborne.nl/"
+
+[[venue]]
+name = "Café Zig Zag"
+city = "Weert"
+url = "https://www.cafezigzag.nl/"
+
+[[venue]]
+name = "MAX"
+city = "Alphen aan den Rijn"
+url = "https://www.max-alphen.nl/"
+
+# no website of its own
+[[venue]]
+name = "Café The Groove"
+city = "Sittard"
+url = "https://www.facebook.com/cafethegroove/"
+
+[[venue]]
+name = "Dorpshuis Zeeland"
+city = "Zeeland"
+url = "https://www.dorpshuiszeeland.nl/"
+
+[[venue]]
+name = "Gryphus"
+city = "Vierlingsbeek"
+url = "https://gryphus.nl/"
+
+# no website of its own
+[[venue]]
+name = "Café Black Horse"
+city = "Menaldum"
+url = "https://www.facebook.com/profile.php?id=61554931157482"
+
+[[venue]]
+name = "OJC Maddogs"
+city = "Groesbeek"
+url = "https://www.ojcmaddogs.nl/"
+
+[[venue]]
+name = "Jongerencentrum Cerberus"
+city = "Hengelo"
+url = "https://www.jcerberus.nl/"
+
+[[venue]]
+name = "Grandcafe 88"
+city = "Winkel"
+url = "https://grandcafe88.nl/"
+
+[[venue]]
+name = "Elckerlyc"
+city = "Luttenberg"
+url = "https://elckerlycluttenberg.nl/"
+
+[[venue]]
+name = "De Partner"
+city = "Nieuwegein"
+url = "https://departnernieuwegein.nl/"
+
+[[venue]]
+name = "Café De Lijst"
+city = "Hoogeveen"
+url = "https://cafedelijst.nl/"
+
+[[venue]]
+name = "Skatepark Haarlem"
+city = "Haarlem"
+url = "https://www.skateparkhaarlem.nl/"
+
+[[venue]]
+name = "DRU Industriepark"
+city = "Ulft"
+url = "https://www.dru-industriepark.nl/"
+
+[[venue]]
+name = "De Meester"
+city = "Almere"
+url = "https://poppodiumdemeester.nl/"
+
+# no website of its own
+[[venue]]
+name = "Café 't Bolwerk"
+city = "Winterswijk"
+url = "https://www.facebook.com/cafebolwerk/"
+aliases = ["Cafe 't Bolwerk Winterswijk"]
+
+[[venue]]
+name = "Buurtvereniging Ons Dorp"
+city = "Emmer-Compascuum"
+url = "https://buurtvereniging-onsdorp.nl/"
+
+[[venue]]
+name = "Rockcafé Lazaru's"
+city = "Leiden"
+url = "https://rockcafelazarus.nl/kroegen/rockcafe-lazarus/"
+
+[[venue]]
+name = "SoundVille"
+city = "Rotterdam"
+url = "https://soundville.org/"
+
+# no website of its own
+[[venue]]
+name = "Heroes Music Bar"
+city = "Zaandam"
+url = "https://www.facebook.com/heroesmusicbar/"
+
+[[venue]]
+name = "De Hip"
+city = "Deventer"
+url = "https://www.dehip.nl/"
+
+[[venue]]
+name = "Slachthuis"
+city = "Haarlem"
+url = "https://slachthuishaarlem.nl/"
+
+[[venue]]
+name = "Stonehenge Festival"
+city = "Steenwijk"
+url = "https://stonehengefestival.nl/"
+
+[[venue]]
+name = "Occultfest"
+city = "Hoogeveen"
+url = "https://occultfest.nl/"
+aliases = ["Stichting Occultfest"]
+
+[[venue]]
+name = "Blaue Lagune"
+city = "Wachtendonk"
+url = "https://www.blauelagune.de/"
+
+# no website of its own
+[[venue]]
+name = "Nachbar"
+city = "Amsterdam"
+url = "https://www.facebook.com/p/nachbar-61558991083884/"
+
+[[venue]]
+name = "Café So What!"
+city = "Steenbergen"
+url = "https://cafesowhat.nl/"
+
+# no website of its own
+[[venue]]
+name = "Rock Cafe The Pit"
+city = "Breda"
+url = "https://www.facebook.com/p/Rock-Cafe-The-Pit-61591078885622/"
+
+[[venue]]
+name = "Café Reiderland"
+city = "Bad Nieuweschans"
+url = "https://www.reiderland.net/"
+
+# no website of its own
+[[venue]]
+name = "Café 't Anker"
+city = "Tolkamer"
+url = "https://www.facebook.com/p/Caf%C3%A9-t-Anker-Tolkamer-61592518457515/"
