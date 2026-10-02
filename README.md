@@ -10,7 +10,7 @@ concert, and writes a single searchable page (`public/index.html`) with date, ba
 ```sh
 uv sync
 
-# Scrape once (e.g. from cron) and write public/index.html + public/concerts.json
+# Scrape once (e.g. from cron) and write public/index.html, public/concerts.json and the static files it uses
 uv run scrapemetal scrape
 
 # Serve the page on http://127.0.0.1:8000/ and re-scrape every 6 hours

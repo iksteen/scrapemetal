@@ -7,6 +7,7 @@ import functools
 import json
 import logging
 import os
+import shutil
 import threading
 from datetime import date, datetime
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -21,6 +22,13 @@ from .tickets import resolve_ticket_urls
 from .venues import VenueDirectory
 
 log = logging.getLogger("scrapemetal")
+
+# Static files served next to index.html:
+# - emoji.woff2 holds the link icon glyphs from Noto Color Emoji (OFL), so the page loads no third-party
+#   fonts. To add glyphs, regenerate it with:
+#   pyftsubset NotoColorEmoji.ttf --unicodes=U+1F3AB,U+1F3DB,U+FE0F --flavor=woff2 --output-file=emoji.woff2
+# - favicon.png is 🤘 rendered from Noto Color Emoji, for browsers without SVG favicons (Safari).
+STATIC_FILES = ["emoji.woff2", "favicon.png"]
 
 
 def _write_atomic(path: Path, text: str) -> None:
@@ -57,6 +65,10 @@ def build_concerts(events: list[Event], venues_path: Path) -> list[Concert]:
 
 def write_output(concerts: list[Concert], status: dict[str, dict], out_dir: Path) -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
+    for name in STATIC_FILES:
+        tmp = out_dir / f"{name}.tmp"
+        shutil.copyfile(Path(__file__).with_name(name), tmp)
+        os.replace(tmp, out_dir / name)
     _write_atomic(out_dir / "index.html", render(concerts, status, datetime.now()))
     _write_atomic(out_dir / "concerts.json", json.dumps([
         {

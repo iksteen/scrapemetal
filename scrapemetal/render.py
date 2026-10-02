@@ -2,11 +2,9 @@
 
 from __future__ import annotations
 
-import base64
 from collections import defaultdict
 from datetime import datetime
 from html import escape
-from pathlib import Path
 from urllib.parse import quote_plus
 
 from .dedupe import city_key, normalize
@@ -21,9 +19,6 @@ DUTCH_MONTHS = ["januari", "februari", "maart", "april", "mei", "juni", "juli",
 
 SOURCE_LABELS = {"metalfan": "Metalfan", "podiuminfo": "Podiuminfo", "metalagenda": "MetalAgenda"}
 CHIP_LABELS = {"metalfan": "MF", "podiuminfo": "PI", "metalagenda": "MA"}
-
-# PNG fallback for browsers without SVG favicons (Safari); 🤘 rendered from Noto Color Emoji.
-FAVICON_PNG = base64.b64encode(Path(__file__).with_name("favicon.png").read_bytes()).decode()
 
 
 def _date_label(c: Concert) -> str:
@@ -106,7 +101,6 @@ def render(concerts: list[Concert], status: dict[str, dict], generated: datetime
     )
 
     return (TEMPLATE
-            .replace("{{favicon_png}}", FAVICON_PNG)
             .replace("{{generated}}", escape(generated.strftime("%Y-%m-%d %H:%M")))
             .replace("{{total}}", str(len(concerts)))
             .replace("{{status}}", status_html)
@@ -122,12 +116,11 @@ TEMPLATE = """<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Metal Agenda</title>
-<link rel="icon" type="image/png" sizes="180x180" href="data:image/png;base64,{{favicon_png}}">
+<link rel="icon" type="image/png" sizes="180x180" href="favicon.png">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>%F0%9F%A4%98</text></svg>">
-<!-- Only the required glyphs (text=), so the link icons render even without a system emoji font. -->
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&text=%F0%9F%8E%AB%F0%9F%8F%9B%EF%B8%8F&display=swap">
 <style>
+/* Only the required glyphs, so the link icons render even without a system emoji font. */
+@font-face { font-family: "Link Icons"; src: url(emoji.woff2) format("woff2"); }
 :root {
   color-scheme: dark;
   --bg: #0f0f10; --panel: #18181b; --panel-2: #202024; --line: #2c2c31;
@@ -170,7 +163,7 @@ td.band a, td.venue a { color: inherit; text-decoration: underline; text-decorat
 td.band a:hover, td.venue a:hover { text-decoration-color: var(--accent); }
 th.links, td.links { text-align: right; }
 .icons { float: right; white-space: nowrap; }
-.icon { display: inline-block; width: 1.7rem; text-align: center; text-decoration: none; font-family: "Noto Color Emoji", sans-serif; font-size: 1.1rem; line-height: 1.3rem; }
+.icon { display: inline-block; width: 1.7rem; text-align: center; text-decoration: none; font-family: "Link Icons", "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif; font-size: 1.1rem; line-height: 1.3rem; }
 a.src { display: inline-block; font-size: .75rem; text-decoration: none; padding: .1rem .45rem; border-radius: 4px; margin: 0 .2rem .2rem 0; color: #fff; }
 a.src-metalfan { background: var(--accent); }
 a.src-podiuminfo { background: var(--accent-2); }
