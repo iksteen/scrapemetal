@@ -101,6 +101,7 @@ def render(concerts: list[Concert], status: dict[str, dict], generated: datetime
     )
 
     return (TEMPLATE
+            .replace("{{generated_date}}", generated.date().isoformat())
             .replace("{{generated}}", escape(generated.strftime("%Y-%m-%d %H:%M")))
             .replace("{{total}}", str(len(concerts)))
             .replace("{{status}}", status_html)
@@ -192,6 +193,21 @@ a.src-metalagenda { background: var(--accent-3); }
   td.city { grid-area: city; text-align: right; }
 }
 </style>
+<script>
+// Concerts that ended after the page was generated are filtered out at the end of the page, but the
+// rows above it are painted first. Hide them (and months that are over) before the body is parsed.
+(() => {
+  const iso = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  const [y, m, d] = '{{generated_date}}'.split('-').map(Number);
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const rules = [];
+  for (let day = new Date(y, m - 1, d); day < today; day.setDate(day.getDate() + 1)) rules.push(`tr[data-date="${iso(day)}"]`);
+  for (let month = new Date(y, m - 1, 1); month < new Date(today.getFullYear(), today.getMonth(), 1); month.setMonth(month.getMonth() + 1)) {
+    rules.push(`#m-${iso(month).slice(0, 7)}`, `nav.months a[data-month="m-${iso(month).slice(0, 7)}"]`);
+  }
+  if (rules.length) document.head.appendChild(document.createElement('style')).textContent = `${rules.join(', ')} { display: none; }`;
+})();
+</script>
 </head>
 <body>
 <header class="top">
